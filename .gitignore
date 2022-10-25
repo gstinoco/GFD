@@ -36,7 +36,8 @@ ehthumbs.db
 ehthumbs_vista.db
 
 # Folder config file
-#Desktop.ini
+Desktop.ini
+desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
