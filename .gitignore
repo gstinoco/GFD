@@ -54,3 +54,5 @@ $RECYCLE.BIN/
 
 *-jvsc-*
 .ipynb_checkpoints
+*.cpython-39*
+__*
