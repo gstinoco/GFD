@@ -71,7 +71,7 @@ def graph_cloud_static(p, u_ap, u_ex):
     fig.canvas.draw()
 
 # %%
-def graph_cloud_transient(u_ap, u_ex):
+def graph_cloud_transient(p, u_ap, u_ex):
     t = len(u_ex[0,:])
     step = math.ceil(t/1000)
     min  = u_ex.min()
@@ -97,7 +97,7 @@ def graph_cloud_transient(u_ap, u_ex):
             ax2.cla()
 
 # %%
-def graph_cloud_transient_vid(u_ap, u_ex, nube):
+def graph_cloud_transient_vid(p, u_ap, u_ex, nube):
     t = len(u_ex[0,:])
     step = math.ceil(t/1000)
     min  = u_ex.min()
@@ -134,5 +134,14 @@ def graph_cloud_transient_vid(u_ap, u_ex, nube):
             ax2.cla()
     
     out.release()
+
+# %%
+def graphEr(er):
+  t = t = len(er)
+  T = np.linspace(0,1,t);
+  plt.plot(T,er)
+  plt.ylabel('Error')
+  plt.xlabel('Tiempo en segundos')
+  plt.title('Error cometido en el método')
 
 
