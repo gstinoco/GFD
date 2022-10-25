@@ -53,6 +53,6 @@ $RECYCLE.BIN/
 .git/credentials
 
 *-jvsc-*
-.ipynb_checkpoints
+.ipynb_checkpoints/
 *.cpython-39*
 __*
