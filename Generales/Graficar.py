@@ -59,8 +59,8 @@ def graph_cloud_static(p, u_ap, u_ex):
     
     plt.suptitle('Ecuación de Poisson')
     
-    tri1 = ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:], cmap='viridis', edgecolor='none')
-    tri2 = ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:], cmap='viridis', edgecolor='none')
+    tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:])
+    tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:])
     
     ax1.set_zlim([min, max])
     ax1.set_title('Solución Aproximada')
@@ -84,8 +84,8 @@ def graph_cloud_transient(u_ap, u_ex):
     for k in range(0,t,step):
         tin = float(T[k])
         plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
-        tri1 = ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k])
-        tri2 = ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:,k])
+        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:])
+        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:])
         ax1.set_zlim([min, max])
         ax1.set_title('Solución Aproximada')
         ax2.set_zlim([min, max])
@@ -111,8 +111,8 @@ def graph_cloud_transient_vid(u_ap, u_ex, nube):
     for k in range(0,t,step):
         tin = float(T[k])
         plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
-        tri1 = ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k])
-        tri2 = ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:,k])
+        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:])
+        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:])
         ax1.set_zlim([min, max])
         ax1.set_title('Solución Aproximada')
         ax2.set_zlim([min, max])
