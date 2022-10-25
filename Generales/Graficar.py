@@ -84,8 +84,8 @@ def graph_cloud_transient(p, u_ap, u_ex):
     for k in range(0,t,step):
         tin = float(T[k])
         plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
-        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:])
-        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:])
+        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
+        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:, k])
         ax1.set_zlim([min, max])
         ax1.set_title('Solución Aproximada')
         ax2.set_zlim([min, max])
@@ -111,8 +111,8 @@ def graph_cloud_transient_vid(p, u_ap, u_ex, nube):
     for k in range(0,t,step):
         tin = float(T[k])
         plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
-        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:])
-        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:])
+        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:,k])
+        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:,k])
         ax1.set_zlim([min, max])
         ax1.set_title('Solución Aproximada')
         ax2.set_zlim([min, max])
