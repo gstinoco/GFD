@@ -145,3 +145,5 @@ def graphEr(er):
     plt.title('Error cometido en el método')
 
 
+
+# %%

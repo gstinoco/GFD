@@ -65,3 +65,5 @@ def Gammas_Cloud(p, pb, vec, L):
     return Gamma
 
 
+
+# %%
