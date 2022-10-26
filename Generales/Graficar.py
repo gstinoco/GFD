@@ -11,9 +11,8 @@ from mpl_toolkits import mplot3d
 import cv2
 
 # %%
-def Mesh_Static(x, y, u_ap, u_ex):
+def graph_mesh_static(x, y, u_ap, u_ex):
     fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw={"projection": "3d"})
-    plt.rcParams["figure.figsize"] = (10,5)
     
     ax1.set_title('Aproximación')
     ax1.plot_surface(x, y, u_ap)
@@ -24,17 +23,15 @@ def Mesh_Static(x, y, u_ap, u_ex):
     plt.show()
 
 # %%
-def Mesh_Transient(x, y, u_ap, u_ex):
+def graph_mesh_transient(x, y, u_ap, u_ex):
     t = len(u_ex[0,0,:])
-    step = math.ceil(t/10)
+    step = math.ceil(t/1000)
+    min  = u_ex.min()
+    max  = u_ex.max()
     T    = np.linspace(0,1,t)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw = {"projection": "3d"})
-    plt.rcParams["figure.figsize"] = (10,5)
+    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw={"projection": "3d"})
     
-    for k in range(0,t,step):
-        ax1.clear()
-        ax2.clear()
+    for k in range(o,t,step):
         tin = float(T[k])
         plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
         
@@ -43,14 +40,22 @@ def Mesh_Transient(x, y, u_ap, u_ex):
     
         ax2.set_title('Solución Exacta')
         ax2.plot_surface(x, y, u_ex[:,:,k])
+    
+        plt.show()
+        
+        if k < t-step:
+            ax1.cla()
+            ax2.cla()
 
 # %%
-def Cloud_Static(p, u_ap, u_ex):
+def graph_cloud_static(p, u_ap, u_ex):
     min  = u_ex.min()
     max  = u_ex.max()
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw = {"projection": "3d"})
-    plt.rcParams["figure.figsize"] = (10,5)
+    fig  = plt.figure(figsize =(15, 5))
+    
+    ax1  = fig.add_subplot(1,2,1, projection='3d')
+    ax2  = fig.add_subplot(1,2,2, projection='3d')
     
     plt.suptitle('Ecuación de Poisson')
     
@@ -66,18 +71,17 @@ def Cloud_Static(p, u_ap, u_ex):
     fig.canvas.draw()
 
 # %%
-def Cloud_Transient(p, u_ap, u_ex):
+def graph_cloud_transient(p, u_ap, u_ex):
     t = len(u_ex[0,:])
     step = math.ceil(t/1000)
     min  = u_ex.min()
     max  = u_ex.max()
     T    = np.linspace(0,1,t)
-    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw = {"projection": "3d"})
-    plt.rcParams["figure.figsize"] = (10,5)
+    fig  = plt.figure(figsize =(15, 5))
+    ax1  = fig.add_subplot(1,2,1, projection='3d')
+    ax2  = fig.add_subplot(1,2,2, projection='3d')
 
     for k in range(0,t,step):
-        ax1.clear()
-        ax2.clear()
         tin = float(T[k])
         plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
         tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
@@ -87,33 +91,33 @@ def Cloud_Transient(p, u_ap, u_ex):
         ax2.set_zlim([min, max])
         ax2.set_title('Solución Exacta')
         fig.canvas.draw()
-        plt.pause(0.1)
 
+        if k < t-step:
+            ax1.cla()
+            ax2.cla()
 
 # %%
-def Cloud_Transient_Vid(p, u_ap, u_ex, nube):
+def graph_cloud_transient_vid(p, u_ap, u_ex, nube):
     t = len(u_ex[0,:])
     step = math.ceil(t/1000)
     min  = u_ex.min()
     max  = u_ex.max()
     T    = np.linspace(0,1,t)
-    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw = {"projection": "3d"})
-    plt.rcParams["figure.figsize"] = (10,5)
+    fig  = plt.figure(figsize =(15, 5))
+    ax1  = fig.add_subplot(1,2,1, projection='3d')
+    ax2  = fig.add_subplot(1,2,2, projection='3d')
     nom  = nube + '.avi'
 
     for k in range(0,t,step):
-        ax1.clear()
-        ax2.clear()
         tin = float(T[k])
         plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
-        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
-        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:, k])
+        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:,k])
+        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:,k])
         ax1.set_zlim([min, max])
         ax1.set_title('Solución Aproximada')
         ax2.set_zlim([min, max])
         ax2.set_title('Solución Exacta')
         fig.canvas.draw()
-        plt.pause(0.1)
   
         data = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
         ima = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
@@ -124,16 +128,20 @@ def Cloud_Transient_Vid(p, u_ap, u_ex, nube):
             out = cv2.VideoWriter(nom,cv2.VideoWriter_fourcc(*'DIVX'), 25, size)
   
         out.write(ima)
+
+        if k < t-step:
+            ax1.cla()
+            ax2.cla()
     
     out.release()
 
 # %%
-def Error(er):
-    t = t = len(er)
-    T = np.linspace(0,1,t);
-    plt.plot(T,er)
-    plt.ylabel('Error')
-    plt.xlabel('Tiempo en segundos')
-    plt.title('Error cometido en el método')
+def graphEr(er):
+  t = t = len(er)
+  T = np.linspace(0,1,t);
+  plt.plot(T,er)
+  plt.ylabel('Error')
+  plt.xlabel('Tiempo en segundos')
+  plt.title('Error cometido en el método')
 
 
