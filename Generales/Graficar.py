@@ -25,12 +25,12 @@ def graph_mesh_static(x, y, u_ap, u_ex):
 # %%
 def graph_mesh_transient(x, y, u_ap, u_ex):
     t = len(u_ex[0,0,:])
-    step = math.ceil(t/10)
+    step = math.ceil(t/1000)
     min  = u_ex.min()
     max  = u_ex.max()
     T    = np.linspace(0,1,t)
-
     fig  = plt.figure(figsize =(15, 5))
+    
     ax1  = fig.add_subplot(1,2,1, projection='3d')
     ax2  = fig.add_subplot(1,2,2, projection='3d')
     
@@ -47,7 +47,6 @@ def graph_mesh_transient(x, y, u_ap, u_ex):
         ax2.plot_surface(x, y, u_ex[:,:,k])
     
         plt.pause(0.1)
-            
 
 # %%
 def graph_cloud_static(p, u_ap, u_ex):
@@ -55,6 +54,7 @@ def graph_cloud_static(p, u_ap, u_ex):
     max  = u_ex.max()
 
     fig  = plt.figure(figsize =(15, 5))
+    
     ax1  = fig.add_subplot(1,2,1, projection='3d')
     ax2  = fig.add_subplot(1,2,2, projection='3d')
     
@@ -114,8 +114,8 @@ def graph_cloud_transient_vid(p, u_ap, u_ex, nube):
         ax2.cla()
         tin = float(T[k])
         plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
-        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:,k])
-        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:,k])
+        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
+        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:, k])
         ax1.set_zlim([min, max])
         ax1.set_title('Solución Aproximada')
         ax2.set_zlim([min, max])
@@ -137,11 +137,11 @@ def graph_cloud_transient_vid(p, u_ap, u_ex, nube):
 
 # %%
 def graphEr(er):
-  t = t = len(er)
-  T = np.linspace(0,1,t);
-  plt.plot(T,er)
-  plt.ylabel('Error')
-  plt.xlabel('Tiempo en segundos')
-  plt.title('Error cometido en el método')
+    t = t = len(er)
+    T = np.linspace(0,1,t);
+    plt.plot(T,er)
+    plt.ylabel('Error')
+    plt.xlabel('Tiempo en segundos')
+    plt.title('Error cometido en el método')
 
 
