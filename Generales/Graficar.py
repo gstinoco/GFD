@@ -20,8 +20,6 @@ def Mesh_Static(x, y, u_ap, u_ex):
     
     ax2.set_title('Solución Exacta')
     ax2.plot_surface(x, y, u_ex)
-    
-    plt.show()
 
 # %%
 def Mesh_Transient(x, y, u_ap, u_ex):
@@ -54,16 +52,13 @@ def Cloud_Static(p, u_ap, u_ex):
     
     plt.suptitle('Ecuación de Poisson')
     
-    tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:])
-    tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:])
-    
+    ax1.scatter(p[:,0], p[:,1], u_ap[:])
     ax1.set_zlim([min, max])
     ax1.set_title('Solución Aproximada')
     
+    ax2.scatter(p[:,0], p[:,1], u_ex[:])
     ax2.set_zlim([min, max])
     ax2.set_title('Solución Exacta')
-    
-    fig.canvas.draw()
 
 # %%
 def Cloud_Transient(p, u_ap, u_ex):
@@ -82,12 +77,13 @@ def Cloud_Transient(p, u_ap, u_ex):
         plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
         tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
         tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:, k])
+
         ax1.set_zlim([min, max])
         ax1.set_title('Solución Aproximada')
+        
         ax2.set_zlim([min, max])
         ax2.set_title('Solución Exacta')
-        fig.canvas.draw()
-        plt.pause(0.1)
+        
 
 
 # %%
@@ -106,14 +102,14 @@ def Cloud_Transient_Vid(p, u_ap, u_ex, nube):
         ax2.clear()
         tin = float(T[k])
         plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
-        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
-        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:, k])
+        
+        ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
         ax1.set_zlim([min, max])
         ax1.set_title('Solución Aproximada')
+        
+        ax2.scatter(p[:,0], p[:,1], u_ex[:, k])
         ax2.set_zlim([min, max])
         ax2.set_title('Solución Exacta')
-        fig.canvas.draw()
-        plt.pause(0.1)
   
         data = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
         ima = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
@@ -135,5 +131,3 @@ def Error(er):
     plt.ylabel('Error')
     plt.xlabel('Tiempo en segundos')
     plt.title('Error cometido en el método')
-
-
