@@ -24,17 +24,25 @@ import math
 # En esta sección se implementan los códigos para calcular el Error Cuadrático Medio (ECM) sobre mallas lógicamentes rectangulares y sobre nubes de puntos. Se implementan las siguientes funciones:
 # 
 #     1.  PolyArea(x, y): Se calcula el área del polígono formado por el nodo central y sus vecinos.
-#     2.  ECM_mesh_transient(x, y, u_ap, u_ex): Se calcula el ECM en mallas lógicamente rectangulares para problemas que involucran el tiempo.
-#     3.  ECM_mesh_static(x, y, u_ap, u_ex): Se calcula el ECM en mallas lógicamente rectangulares para problemas que no involucran el tiempo.
-#     4.  ECM_cloud_transient(x, y, u_ap, u_ex): Se calcula el ECM en nubes de puntos para problemas que involucran el tiempo.
-#     5.  ECM_cloud_static(x, y, u_ap, u_ex): Se calcula el ECM en nubes de puntos para problemas que no involucran el tiempo.
+#     2.  Mesh_Transient(x, y, u_ap, u_ex): Se calcula el ECM en mallas lógicamente rectangulares para problemas que involucran el tiempo.
+#     3.  Mesh_Static(x, y, u_ap, u_ex): Se calcula el ECM en mallas lógicamente rectangulares para problemas que no involucran el tiempo.
+#     4.  Cloud_Transient(x, y, u_ap, u_ex): Se calcula el ECM en nubes de puntos para problemas que involucran el tiempo.
+#     5.  Cloud_Static(x, y, u_ap, u_ex): Se calcula el ECM en nubes de puntos para problemas que no involucran el tiempo.
+
+# %% [markdown]
+# ## PolyArea
+# Se define la función para calcular el área de un polígono definido por los vertices cuyas coordenadas se guardan en $x$ y $y$.
 
 # %%
 def PolyArea(x,y):
-    return 0.5*np.abs(np.dot(x,np.roll(y,1))-np.dot(y,np.roll(x,1)))
+    return 0.5*np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1)))
+
+# %% [markdown]
+# ## Mesh Transient
+# En este caso se utiliza una malla lógicamente rectangular para un problema transiente. El polígono que se utiliza para calcular el área es el definido por todos los vecinos inmediatos del nodo interior.
 
 # %%
-def ECM_mesh_transient(x, y, u_ap, u_ex):
+def Mesh_Transient(x, y, u_ap, u_ex):
     me   = x.shape                                                                  # Se calcula el tamaño de la malla.
     m    = me[0]                                                                    # Se calcula el número de nodos en x.
     n    = me[1]                                                                    # Se calcula el número de nodos en y.
@@ -60,8 +68,12 @@ def ECM_mesh_transient(x, y, u_ap, u_ex):
     
     return er
 
+# %% [markdown]
+# ## Mesh Static
+# En este caso se utiliza una malla lógicamente rectangular para un problema que no depende del tiempo. El polígono que se utiliza para calcular el área es el definido por todos los vecinos inmediatos del nodo interior.
+
 # %%
-def ECM_mesh_static(x, y, u_ap, u_ex):
+def Mesh_Static(x, y, u_ap, u_ex):
     me   = x.shape                                                                  # Se calcula el tamaño de la malla.
     m    = me[0]                                                                    # Se calcula el número de nodos en x.
     n    = me[1]                                                                    # Se calcula el número de nodos en y.
@@ -85,8 +97,12 @@ def ECM_mesh_static(x, y, u_ap, u_ex):
     
     return er
 
+# %% [markdown]
+# ## Cloud Transient
+# En este caso se utiliza una nube de puntos o una triangulación para un problema transiente. El polígono que se utiliza para calcular el área es el definido por todos los vecinos seleccionados del nodo interior.
+
 # %%
-def ECM_cloud_transient(p, vec, u_ap, u_ex):
+def Cloud_Transient(p, vec, u_ap, u_ex):
     m    = len(p[:,0])                                                              # Se encuentra el tamaño de la triangulación.
     t    = len(u_ap[1,:])                                                           # Se encuentra la cantidad de pasos en el tiempo.
     er   = np.zeros(t)                                                              # Se inicializa la variable para guardar el error.
@@ -109,8 +125,12 @@ def ECM_cloud_transient(p, vec, u_ap, u_ex):
     
     return er
 
+# %% [markdown]
+# ## Cloud Static
+# En este caso se utiliza una nube de puntos o una triangulación para un problema que no depende del tiempo. El polígono que se utiliza para calcular el área es el definido por todos los vecinos seleccionados del nodo interior.
+
 # %%
-def ECM_cloud_static(p, vec, u_ap, u_ex):
+def Cloud_Static(p, vec, u_ap, u_ex):
     m    = len(p[:,0])                                                              # Se encuentra el tamaño de la triangulación.
     er   = 0                                                                        # Se inicializa la variable para guardar el error.
     area = np.zeros(m)                                                              # Se inicializa la variable para guardar el área.
@@ -130,5 +150,3 @@ def ECM_cloud_static(p, vec, u_ap, u_ex):
     er = math.sqrt(er)                                                              # Se calcula la raiz cuadrada.
     
     return er
-
-
