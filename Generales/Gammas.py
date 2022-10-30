@@ -1,5 +1,5 @@
-# %% [markdown]
-# # Cálculo de Gammas para diferentes códigos
+
+## Cálculo de Gammas para diferentes códigos
 # En este archivo se definen diferentes funciones para el cálculo de Gammas, el cálculo de Gammas se define para los siguientes casos:
 # 
 #     1.   El problema se resuelve en una malla lógicamente rectangular.
@@ -7,12 +7,10 @@
 # 
 # En todos los casos, es necesario introducir la región en $x$ y $y$.
 
-# %%
 import numpy as np
 import math
 
-# %%
-def Gammas_Mesh(x, y, L):
+def Mesh(x, y, L):
     me       = x.shape                                                              # Se encuentra el tamaño de la malla.
     m        = me[0]                                                                # Se encuentra el tamaño en x.
     n        = me[1]                                                                # Se encuentra el tamaño en y.
@@ -21,25 +19,25 @@ def Gammas_Mesh(x, y, L):
     for i in range(1,m-1):                                                          # Para cada uno de los nodos en x.
         for j in range(1,n-1):                                                      # Para cada uno de los nodos en y.
             dx = np.array([x[i + 1, j]   - x[i, j], x[i + 1, j + 1] - x[i, j], \
-                          x[i, j + 1]   - x[i, j], x[i - 1, j + 1] - x[i, j], \
-                          x[i - 1, j]   - x[i, j], x[i - 1, j - 1] - x[i, j], \
-                          x[i, j - 1]   - x[i, j], x[i + 1, j - 1] - x[i, j]])      # Se calcula dx.
+                           x[i, j + 1]   - x[i, j], x[i - 1, j + 1] - x[i, j], \
+                           x[i - 1, j]   - x[i, j], x[i - 1, j - 1] - x[i, j], \
+                           x[i, j - 1]   - x[i, j], x[i + 1, j - 1] - x[i, j]])     # Se calcula dx.
             
             dy = np.array([y[i + 1, j]   - y[i, j], y[i + 1, j + 1] - y[i, j], \
-                          y[i, j + 1]   - y[i, j], y[i - 1, j + 1] - y[i, j], \
-                          y[i - 1, j]   - y[i, j], y[i - 1, j - 1] - y[i, j], \
-                          y[i, j - 1]   - y[i, j], y[i + 1, j - 1] - y[i, j]])      # Se calcula dy
+                           y[i, j + 1]   - y[i, j], y[i - 1, j + 1] - y[i, j], \
+                           y[i - 1, j]   - y[i, j], y[i - 1, j - 1] - y[i, j], \
+                           y[i, j - 1]   - y[i, j], y[i + 1, j - 1] - y[i, j]])     # Se calcula dy
             
             M = np.vstack([[dx], [dy], [dx**2], [dx*dy], [dy**2]])                  # Se hace la matriz M.
             M = np.linalg.pinv(M)                                                   # Se calcula la pseudoinversa.
             YY = M@L                                                                # Se calcula M*L.
             Gem = np.vstack([-sum(YY), YY])                                         # Se encuentran los balores Gamma.
-            Gamma[i,j,:] = Gem.transpose()                                          # Se guardan los valores Gamma correspondientes.
+            for k in np.arange(9):
+                Gamma[i,j,k] = Gem[k]                                             # Se guardan los valores Gamma correspondientes.
 
     return Gamma
 
-# %%
-def Gammas_Cloud(p, pb, vec, L):
+def Cloud(p, pb, vec, L):
     nvec  = len(vec[:,1])                                                           # Se encuentra el número máximo de vecinos.
     m     = len(p[:,0])                                                             # Se encuentra el número de nodos.
     mf    = len(pb[:,0])                                                            # Se encuentra el número de nodos frontera.
@@ -63,7 +61,3 @@ def Gammas_Cloud(p, pb, vec, L):
             Gamma[i,j] = Gem[0,j]                                                   # Se guarda el Gamma correspondiente.
     
     return Gamma
-
-
-
-# %%

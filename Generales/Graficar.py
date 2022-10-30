@@ -1,16 +1,15 @@
-# %% [markdown]
-# # Graficadores
+
+# Graficadores
 # Aquí se definen los diferentes graficadores que se utilizarán en los diferentes códigos de Python con la finalidad de no tener que definirlos en cada código por separado.
 
-# %%
 import numpy as np
 import math
 import matplotlib.pyplot as plt
 from matplotlib.ticker import LinearLocator
 from mpl_toolkits import mplot3d
+import matplotlib.tri as mtri
 import cv2
 
-# %%
 def Mesh_Static(x, y, u_ap, u_ex):
     fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw={"projection": "3d"})
     plt.rcParams["figure.figsize"] = (10,5)
@@ -20,8 +19,8 @@ def Mesh_Static(x, y, u_ap, u_ex):
     
     ax2.set_title('Solución Exacta')
     ax2.plot_surface(x, y, u_ex)
+    plt.show()
 
-# %%
 def Mesh_Transient(x, y, u_ap, u_ex):
     t = len(u_ex[0,0,:])
     step = math.ceil(t/10)
@@ -42,16 +41,18 @@ def Mesh_Transient(x, y, u_ap, u_ex):
         ax2.set_title('Solución Exacta')
         ax2.plot_surface(x, y, u_ex[:,:,k])
 
-# %%
+        plt.show()
+
 def Cloud_Static(p, u_ap, u_ex):
     min  = u_ex.min()
     max  = u_ex.max()
 
+   
     fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw = {"projection": "3d"})
+
     plt.rcParams["figure.figsize"] = (10,5)
-    
     plt.suptitle('Ecuación de Poisson')
-    
+
     ax1.scatter(p[:,0], p[:,1], u_ap[:])
     ax1.set_zlim([min, max])
     ax1.set_title('Solución Aproximada')
@@ -59,6 +60,8 @@ def Cloud_Static(p, u_ap, u_ex):
     ax2.scatter(p[:,0], p[:,1], u_ex[:])
     ax2.set_zlim([min, max])
     ax2.set_title('Solución Exacta')
+
+    plt.show()
 
 # %%
 def Cloud_Transient(p, u_ap, u_ex):
@@ -74,15 +77,18 @@ def Cloud_Transient(p, u_ap, u_ex):
         ax1.clear()
         ax2.clear()
         tin = float(T[k])
-        plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
-        tri1 = ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
-        tri2 = ax2.scatter(p[:,0], p[:,1], u_ex[:, k])
 
+        plt.suptitle('Solución al tiempo t = %1.3f seg.' %tin)
+
+        ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
         ax1.set_zlim([min, max])
         ax1.set_title('Solución Aproximada')
         
+        ax2.scatter(p[:,0], p[:,1], u_ex[:, k])
         ax2.set_zlim([min, max])
         ax2.set_title('Solución Exacta')
+
+        plt.pause(0.1)
         
 
 
@@ -125,9 +131,9 @@ def Cloud_Transient_Vid(p, u_ap, u_ex, nube):
 
 # %%
 def Error(er):
-    t = t = len(er)
+    t = len(er)
     T = np.linspace(0,1,t);
-    plt.plot(T,er)
+    plt.plot(T, er)
     plt.ylabel('Error')
     plt.xlabel('Tiempo en segundos')
     plt.title('Error cometido en el método')
