@@ -45,10 +45,10 @@ from scipy.io import loadmat
 
 ## Se cargan los datos de la region
 # Malla para trabajar
-nube = 'CAB21'
+malla = 'CAB21'
 
 # Se cargan todos los datos desde el archivo
-mat = scipy.io.loadmat('Regiones/Mallas/' + nube + '.mat')
+mat = scipy.io.loadmat('Regiones/Mallas/' + malla + '.mat')
 
 # Se guardan los datos de los nodos
 x  = mat['x']
@@ -119,7 +119,7 @@ def Poisson_Mesh(x, y, phi, f):
     return phi_ap, phi_ex
 
 ## Ejecución
-## En esta parte se ejecutan los códigos necesarios para resolver el problema y se grafican las soluciones.
+# En esta parte se ejecutan los códigos necesarios para resolver el problema y se grafican las soluciones.
 
 phi_ap, phi_ex = Poisson_Mesh(x, y, phi, f)
 er = ECM(x, y, phi_ap, phi_ex)
