@@ -1,128 +1,170 @@
-## Cálculo del Error
-# En este archivo se definen diferentes funciones para calcular el error cometido con los métodos de Diferencias Finitas Generalizadas. Se agregan 3 formas para calcular:
+# Routines to calculate the mean square error for the Generalized Finite Difference methods. 2 ways are proposed to calculate the error:
 # 
 #     \| e \|^2 = \left(\sqrt{\sum_{i} (u_{i}^{k} - U_{i}^{k})}\right) A_{i}
 # 
-#     1.   El problema se resolvió en mallas lógicamente rectangulares.
-#     2.   El problema se resolvió en una triangulación o en una nube de puntos.
-# 
-# En todos los casos, es necesario introducir la solución exacta $U_{i}^{k}$ y la solución aproximada $u_{i}^{k}$.
+#     1.   The problem was solved in logically rectangular meshes.
+#     2.   The problem was solved in triangulations or unstructured clouds of points.
 
-# ## Importación de Módulos
-# En esta sección se importan todos los módulos necesarios para que se ejecuten correctamente los códigos.
 import numpy as np
 import math
 
-# ## Cálculo del error
-# En esta sección se implementan los códigos para calcular el Error Cuadrático Medio (ECM) sobre mallas lógicamentes rectangulares y sobre nubes de puntos. Se implementan las siguientes funciones:
-# 
-#     1.  PolyArea(x, y): Se calcula el área del polígono formado por el nodo central y sus vecinos.
-#     2.  Mesh_Transient(x, y, u_ap, u_ex): Se calcula el ECM en mallas lógicamente rectangulares para problemas que involucran el tiempo.
-#     3.  Mesh_Static(x, y, u_ap, u_ex): Se calcula el ECM en mallas lógicamente rectangulares para problemas que no involucran el tiempo.
-#     4.  Cloud_Transient(x, y, u_ap, u_ex): Se calcula el ECM en nubes de puntos para problemas que involucran el tiempo.
-#     5.  Cloud_Static(x, y, u_ap, u_ex): Se calcula el ECM en nubes de puntos para problemas que no involucran el tiempo.
-
-# ## PolyArea
-# Se define la función para calcular el área de un polígono definido por los vertices cuyas coordenadas se guardan en $x$ y $y$.
-
 def PolyArea(x,y):
-    return 0.5*np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1)))
-
-## Mesh Transient
-# En este caso se utiliza una malla lógicamente rectangular para un problema transiente. El polígono que se utiliza para calcular el área es el definido por todos los vecinos inmediatos del nodo interior.
-def Mesh_Transient(x, y, u_ap, u_ex):
-    me   = x.shape                                                                  # Se calcula el tamaño de la malla.
-    m    = me[0]                                                                    # Se calcula el número de nodos en x.
-    n    = me[1]                                                                    # Se calcula el número de nodos en y.
-    t    = len(u_ap[1,:])                                                           # Se encuentra la cantidad de pasos en el tiempo.
-    er   = np.zeros(t)                                                              # Se inicializa la variable para guardar el error.
-    area = np.zeros([m,n])                                                          # Se inicializa la variable para guardar el área.
-
-    for i in np.arange(1,m-1):                                                      # Para cada uno de los nodos en x.
-        for j in np.arange(1,n-1):                                                  # Para cada uno de los nodos en y.
-            px = np.array([x[i+1, j], x[i+1, j+1], x[i, j+1], x[i-1, j+1], \
-                          x[i-1, j], x[i-1, j-1], x[i, j-1], x[i+1, j-1]])          # Se guardan los valores x del polígono.
-            py = np.array([y[i+1, j], y[i+1, j+1], y[i, j+1], y[i-1, j+1], \
-                          y[i-1, j], y[i-1, j-1], y[i, j-1], y[i+1, j-1]])          # Se guardan los valores y del polígono.
-            area[i,j] = PolyArea(px,py)                                             # Se calcula el área.
-
-    for k in np.arange(t):                                                          # Para cada uno de los pasos de tiempo.
-        for i in np.arange(1,m-1):                                                  # Para cada uno de los nodos en x.
-            for j in np.arange(1,n-1):                                              # Para cada uno de los nodos en y.
-                er[k] = er[k] + area[i,j]*(u_ap[i,j,k] - u_ex[i,j,k])**2            # Se calcula el error en el nodo.
-        er[k] = math.sqrt(er[k])                                                    # Se calcula la raiz cuadrada.
+    # PolyArea
+    # A function is defined to calculate the area of a polygon defined by the vertices whose coordinates are stored in $x$ and $y$.
+    # 
+    # Input parameters
+    #   x           m x n           Array           Array with the coordinates in x of the vertices of the polygon.
+    #   y           m x n           Array           Array with the coordinates in y of the vertices of the polygon.
+    # 
+    # Output parameters
+    #   area                        Real            Area of the polygon.
     
-    return er
+    area = 0.5*np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1)))
 
-## Mesh Static
-# En este caso se utiliza una malla lógicamente rectangular para un problema que no depende del tiempo. El polígono que se utiliza para calcular el área es el definido por todos los vecinos inmediatos del nodo interior.
+    return area
+ 
 def Mesh_Static(x, y, u_ap, u_ex):
-    me   = x.shape                                                                  # Se calcula el tamaño de la malla.
-    m    = me[0]                                                                    # Se calcula el número de nodos en x.
-    n    = me[1]                                                                    # Se calcula el número de nodos en y.
-    er   = 0                                                                        # Se inicializa la variable para guardar el error.
-    area = np.zeros([m,n])                                                          # Se inicializa la variable para guardar el área.
+    # Mesh_Static
+    # Routine to compute the error in a logically rectanguar mesh for a problem that does not depend on time.
+    # The polygon used to calculate the area is the one defined by all the immediate neighbors of the central node.
+    #
+    # Input parameters
+    #   x           m x n           Array           Array with the coordinates in x of the nodes.
+    #   y           m x n           Array           Array with the coordinates in y of the nodes.
+    #   u_ap        m x n           Array           Array with the computed solution.
+    #   u_ex        m x n           Array           Array with the theoretical solution.
+    # 
+    # Output parameters
+    #   er                          Real        Mean square error.
 
-    for i in np.arange(1,m-1):                                                      # Para cada uno de los nodos en x.
-        for j in np.arange(1,n-1):                                                  # Para cada uno de los nodos en y.
+    me   = x.shape                                                                  # The size of the mesh is found.
+    m    = me[0]                                                                    # The number of nodes in x.
+    n    = me[1]                                                                    # The number of nodes in y.
+    er   = 0                                                                        # er initialization with 0.
+    area = np.zeros([m,n])                                                          # area initialization with zeros.
+
+    for i in np.arange(1,m-1):                                                      # For each of the nodes on the x axis.
+        for j in np.arange(1,n-1):                                                  # For each of the nodes on the y axis.
             px = np.array([x[i+1, j], x[i+1, j+1], x[i, j+1], x[i-1, j+1], \
-                           x[i-1, j], x[i-1, j-1], x[i, j-1], x[i+1, j-1]])          # Se guardan los valores x del polígono.
+                           x[i-1, j], x[i-1, j-1], x[i, j-1], x[i+1, j-1]])         # The x-values of the polygon are stored.
             py = np.array([y[i+1, j], y[i+1, j+1], y[i, j+1], y[i-1, j+1], \
-                           y[i-1, j], y[i-1, j-1], y[i, j-1], y[i+1, j-1]])          # Se guardan los valores y del polígono.
-            area[i,j] = PolyArea(px,py)                                             # Se calcula el área.
+                           y[i-1, j], y[i-1, j-1], y[i, j-1], y[i+1, j-1]])         # The y-values of the polygon are stored.
+            area[i,j] = PolyArea(px,py)                                             # Area computation.
 
-    for i in np.arange(1,m-1):                                                      # Para cada uno de los nodos en x.
-        for j in np.arange(1,n-1):                                                  # Para cada uno de los nodos en y.
-            er = er + area[i,j]*(u_ap[i,j] - u_ex[i,j])**2                          # Se calcula el error en el nodo.
+    for i in np.arange(m):                                                          # For each of the nodes on the x axis.
+        for j in np.arange(n):                                                      # For each of the nodes on the y axis.
+            er = er + area[i,j]*(u_ap[i,j] - u_ex[i,j])**2                          # Mean saquare error computation.
     
-    er = math.sqrt(er)                                                          # Se calcula la raiz cuadrada.
-    
-    return er
-
-## Cloud Transient
-# En este caso se utiliza una nube de puntos o una triangulación para un problema transiente. El polígono que se utiliza para calcular el área es el definido por todos los vecinos seleccionados del nodo interior.
-def Cloud_Transient(p, vec, u_ap, u_ex):
-    m    = len(p[:,0])                                                              # Se encuentra el tamaño de la triangulación.
-    t    = len(u_ap[1,:])                                                           # Se encuentra la cantidad de pasos en el tiempo.
-    er   = np.zeros(t)                                                              # Se inicializa la variable para guardar el error.
-    area = np.zeros(m)                                                              # Se inicializa la variable para guardar el área.
-
-    for i in np.arange(m):
-        nvec = sum(vec[i,:] != 0)                                                   # Se calcula el número de vecinos que tiene el nodo.
-        polix = np.zeros([nvec])                                                    # Se hace un arreglo para las coordenadas x del polígono.
-        poliy = np.zeros([nvec])                                                    # Se hace un arreglo para las coordenadas y del polígono.
-        for j in np.arange(nvec):                                                   # Para cada uno de los nodos vecinos.
-            vec1 = int(vec[i,j])-1                                                  # Se encuentra el índice del nodo.
-            polix[j] = p[vec1,0]                                                    # Se guarda la coordenada x del nodo.
-            poliy[j] = p[vec1,1]                                                    # Se guarda la coordenada y del nodo.
-        area[i] = PolyArea(polix, poliy)                                            # Se calcula el área.
-
-    for k in np.arange(t):                                                          # Para cada uno de los pasos de tiempo.
-        for i in np.arange(m):                                                      # Para cada uno de los nodos de la malla.
-            er[k] = er[k] + area[i]*(u_ap[i,k] - u_ex[i,k])**2                      # Se calcula el error en el nodo.
-        er[k] = math.sqrt(er[k])                                                    # Se calcula la raiz cuadrada.
+    er = math.sqrt(er)                                                              # The square root is computed.
     
     return er
 
-## Cloud Static
-# En este caso se utiliza una nube de puntos o una triangulación para un problema que no depende del tiempo. El polígono que se utiliza para calcular el área es el definido por todos los vecinos seleccionados del nodo interior.
 def Cloud_Static(p, vec, u_ap, u_ex):
-    m    = len(p[:,0])                                                              # Se encuentra el tamaño de la triangulación.
-    er   = 0                                                                        # Se inicializa la variable para guardar el error.
-    area = np.zeros(m)                                                              # Se inicializa la variable para guardar el área.
+    # Cloud_Static
+    # Routine to compute the error in a triangulation or an unstructured cloud of points for a problem that does not depend on time.
+    # The polygon used to calculate the area is the one defined by all the immediate neighbors of the central node.
+    #
+    # Input parameters
+    #   p           m x 2           Array           Array with the coordinates of the nodes.
+    #   vec         m x nvec        Array           Array with the correspondence of the nvec neighbors of each node.
+    #   u_ap        m x 1           Array           Array with the computed solution.
+    #   u_ex        m x 1           Array           Array with the theoretical solution.
+    # 
+    # Output parameters
+    #   er                          Real            Mean square error.
+
+    m    = len(p[:,0])                                                              # The total number of nodes is calculated.
+    er   = 0                                                                        # er initialization with 0.
+    area = np.zeros(m)                                                              # area initialization with zeros.
 
     for i in np.arange(m):
-        nvec = sum(vec[i,:] != 0)                                                   # Se calcula el número de vecinos que tiene el nodo.
-        polix = np.zeros([nvec])                                                    # Se hace un arreglo para las coordenadas x del polígono.
-        poliy = np.zeros([nvec])                                                    # Se hace un arreglo para las coordenadas y del polígono.
-        for j in np.arange(nvec):                                                   # Para cada uno de los nodos vecinos.
-            vec1 = int(vec[i,j])-1                                                  # Se encuentra el índice del nodo.
-            polix[j] = p[vec1,0]                                                    # Se guarda la coordenada x del nodo.
-            poliy[j] = p[vec1,1]                                                    # Se guarda la coordenada y del nodo.
-        area[i] = PolyArea(polix, poliy)                                            # Se calcula el área.
+        nvec = sum(vec[i,:] != 0)                                                   # The number of neighbors of the central node.
+        polix = np.zeros([nvec])                                                    # The x-values of the polygon are stored.
+        poliy = np.zeros([nvec])                                                    # The y-values of the polygon are stored.
+        for j in np.arange(nvec):                                                   # For each of the neighbor nodes.
+            vec1 = int(vec[i,j])-1                                                  # The index of the node is found.
+            polix[j] = p[vec1,0]                                                    # The x coordinate of the node is stored.
+            poliy[j] = p[vec1,1]                                                    # The y coordinate of the node is stored.
+        area[i] = PolyArea(polix, poliy)                                            # Area computation.
 
-    for i in np.arange(m):                                                          # Para cada uno de los nodos de la malla.
-        er = er + area[i]*(u_ap[i] - u_ex[i])**2                                    # Se calcula el error en el nodo.
-    er = math.sqrt(er)                                                              # Se calcula la raiz cuadrada.
+    for i in np.arange(m):                                                          # For each of the nodes.
+        er = er + area[i]*(u_ap[i] - u_ex[i])**2                                    # Mean saquare error computation.
+
+    er = math.sqrt(er)                                                              # The square root is computed.
+    
+    return er
+
+def Mesh_Transient(x, y, u_ap, u_ex):
+    # Mesh_Transient
+    # Routine to compute the error in a logically rectanguar mesh for a problem that depends on time.
+    # The polygon used to calculate the area is the one defined by all the immediate neighbors of the central node.
+    #
+    # Input parameters
+    #   x           m x n           Array           Array with the coordinates in x of the nodes.
+    #   y           m x n           Array           Array with the coordinates in y of the nodes.
+    #   u_ap        m x n x t       Array           Array with the computed solution.
+    #   u_ex        m x n x t       Array           Array with the theoretical solution.
+    # 
+    # Output parameters
+    #   er          t x 1           Array           Mean square error computed on each time step.
+
+    me   = x.shape                                                                  # The size of the mesh is found.
+    m    = me[0]                                                                    # The number of nodes in x.
+    n    = me[1]                                                                    # The number of nodes in y.
+    t    = len(u_ap[0,0,:])                                                         # The number of time steps is found.
+    er   = np.zeros(t)                                                              # er initialization with zeros.
+    area = np.zeros([m,n])                                                          # area initialization with zeros.
+
+    for i in np.arange(1,m-1):                                                      # For each of the nodes on the x axis.
+        for j in np.arange(1,n-1):                                                  # For each of the nodes on the y axis.
+            px = np.array([x[i+1, j], x[i+1, j+1], x[i, j+1], x[i-1, j+1], \
+                           x[i-1, j], x[i-1, j-1], x[i, j-1], x[i+1, j-1]])         # The x-values of the polygon are stored.
+            py = np.array([y[i+1, j], y[i+1, j+1], y[i, j+1], y[i-1, j+1], \
+                           y[i-1, j], y[i-1, j-1], y[i, j-1], y[i+1, j-1]])         # The y-values of the polygon are stored.
+            area[i,j] = PolyArea(px,py)                                             # Area computation.
+
+    for k in np.arange(t):                                                          # For each time step.
+        for i in np.arange(1,m-1):                                                  # For each of the nodes on the x axis.
+            for j in np.arange(1,n-1):                                              # For each of the nodes on the y axis.
+                er[k] = er[k] + area[i,j]*(u_ap[i,j,k] - u_ex[i,j,k])**2            # Mean saquare error computation.
+
+        er[k] = math.sqrt(er[k])                                                    # The square root is computed.
+    
+    return er
+
+def Cloud_Transient(p, vec, u_ap, u_ex):
+    # Cloud_Tansient
+    # Routine to compute the error in a triangulation or an unstructured cloud of points for a problem that depends on time.
+    # The polygon used to calculate the area is the one defined by all the immediate neighbors of the central node.
+    #
+    # Input parameters
+    #   p           m x 2           Array           Array with the coordinates of the nodes.
+    #   vec         m x nvec        Array           Array with the correspondence of the nvec neighbors of each node.
+    #   u_ap        m x t           Array           Array with the computed solution.
+    #   u_ex        m x t           Array           Array with the theoretical solution.
+    # 
+    # Output parameters
+    #   er          t x 1           Array           Mean square error computed on each time step.
+
+    m    = len(p[:,0])                                                              # The total number of nodes is calculated.
+    t    = len(u_ap[0,:])                                                           # The number of time steps is found.
+    er   = np.zeros(t)                                                              # er initialization with zeros.
+    area = np.zeros(m)                                                              # area initialization with zeros.
+
+    for i in np.arange(m):
+        nvec = sum(vec[i,:] != 0)                                                   # The number of neighbors of the central node.
+        polix = np.zeros([nvec])                                                    # The x-values of the polygon are stored.
+        poliy = np.zeros([nvec])                                                    # The y-values of the polygon are stored.
+        for j in np.arange(nvec):                                                   # For each of the neighbor nodes.
+            vec1 = int(vec[i,j])-1                                                  # The index of the node is found.
+            polix[j] = p[vec1,0]                                                    # The x coordinate of the node is stored.
+            poliy[j] = p[vec1,1]                                                    # The y coordinate of the node is stored.
+        area[i] = PolyArea(polix, poliy)                                            # Area computation.
+
+    for k in np.arange(t):                                                          # For each time step.
+        for i in np.arange(m):                                                      # For each of the nodes.
+            er[k] = er[k] + area[i]*(u_ap[i,k] - u_ex[i,k])**2                      # Mean saquare error computation.
+
+        er[k] = math.sqrt(er[k])                                                    # The square root is computed.
     
     return er

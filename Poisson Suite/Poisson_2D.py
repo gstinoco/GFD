@@ -14,14 +14,14 @@ def Poisson_Mesh(x, y, phi, f):
     # \nabla^2 \phi = f
     # 
     # Input parameters
-    #     x           m x n       double      Array with the coordinates in x of the nodes.
-    #     y           m x n       double      Array with the coordinates in y of the nodes.
-    #     phi                     function    Function declared with the boundary condition.
-    #     f                       function    Function declared with the right side of the equation.
+    #   x           m x n           Array               Array with the coordinates in x of the nodes.
+    #   y           m x n           Array               Array with the coordinates in y of the nodes.
+    #   phi                         function            Function declared with the boundary condition.
+    #   f                           function            Function declared with the right side of the equation.
     # 
     # Output parameters
-    #     phi_ap      m x 1       double      Array with the approximation computed by the routine.
-    #     phi_ex      m x 1       double      Array with the theoretical solution.
+    #   phi_ap      m x n           Array               Array with the approximation computed by the routine.
+    #   phi_ex      m x n           Array               Array with the theoretical solution.
 
     # Variable initizalization
     me       = x.shape                                                              # The size of the mesh is found.
@@ -47,8 +47,8 @@ def Poisson_Mesh(x, y, phi, f):
     # A Generalized Finite Differences Method
     while err >= tol:                                                               # As long as the error is greater than the tolerance.
         err = 0                                                                     # Error becomes zero to be able to update.
-        for i in range(1,m-1):                                                      # For each of the nodes on the x.
-            for j in range(1,n-1):                                                  # For each of the nodes on the y.
+        for i in range(1,m-1):                                                      # For each of the nodes on the x axis.
+            for j in range(1,n-1):                                                  # For each of the nodes on the y axis.
                 t = (f(x[i, j], y[i, j]) - (              \
                     Gamma[i, j, 1]*phi_ap[i + 1, j    ] + \
                     Gamma[i, j, 2]*phi_ap[i + 1, j + 1] + \
@@ -78,15 +78,15 @@ def Poisson_Tri(p, pb, tt, phi, f):
     # \nabla^2 \phi = f
     # 
     # Input parameters
-    #     p           m x 2       double      Array with the coordinates of the nodes.
-    #     pb          b x 2       double      Array with the coordinates of the boundary nodes.
-    #     tt          n x 3       double      Array with the correspondence of the n triangles.
-    #     phi                     function    Function declared with the boundary condition.
-    #     f                       function    Function declared with the right side of the equation.
+    #   p           m x 2           Array           Array with the coordinates of the nodes.
+    #   pb          b x 2           Array           Array with the coordinates of the boundary nodes.
+    #   tt          n x 3           Array           Array with the correspondence of the n triangles.
+    #   phi                         function        Function declared with the boundary condition.
+    #   f                           function        Function declared with the right side of the equation.
     # 
     # Output parameters
-    #     phi_ap      m x 1       double      Array with the approximation computed by the routine.
-    #     phi_ex      m x 1       double      Array with the theoretical solution.
+    #   phi_ap      m x 1           Array           Array with the approximation computed by the routine.
+    #   phi_ex      m x 1           Array           Array with the theoretical solution.
     
     # Variable initizalization
     m        = len(p[:,0])                                                          # The total number of nodes is calculated.
@@ -136,15 +136,15 @@ def Poisson_Cloud(p, pb, vec, phi, f):
     # \nabla^2 \phi = f
     # 
     # Input parameters
-    #     p           m x 2       double      Array with the coordinates of the nodes.
-    #     pb          b x 2       double      Array with the coordinates of the boundary nodes.
-    #     vec         m x nvec    double      Array with the correspondence of the nvec neighbors of each node.
-    #     phi                     function    Function declared with the boundary condition.
-    #     f                       function    Function declared with the right side of the equation.
+    #   p           m x 2           Array           Array with the coordinates of the nodes.
+    #   pb          b x 2           Array           Array with the coordinates of the boundary nodes.
+    #   vec         m x nvec        Array           Array with the correspondence of the nvec neighbors of each node.
+    #   phi                         function        Function declared with the boundary condition.
+    #   f                           function        Function declared with the right side of the equation.
     # 
     # Output parameters
-    #     phi_ap      m x 1       double      Array with the approximation computed by the routine.
-    #     phi_ex      m x 1       double      Array with the theoretical solution.
+    #   phi_ap      m x 1           Array           Array with the approximation computed by the routine.
+    #   phi_ex      m x 1           Array           Array with the theoretical solution.
 
     # Variable initizalization
     m        = len(p[:,0])                                                          # The total number of nodes is calculated.

@@ -7,12 +7,12 @@ def Neighbors_Tri(p, tt, nvec):
     # Routine to find the neighbor nodes in a triangulation.
     #
     # Input parameters
-    #     p           m x 2       double      Array with the coordinates of the nodes.
-    #     tt          n x 3       double      Array with the correspondence of the n triangles.
-    #     nvec                    integer     Maximum number of neighbors.
+    #   p           m x 2           double          Array with the coordinates of the nodes.
+    #   tt          n x 3           double          Array with the correspondence of the n triangles.
+    #   nvec                        integer         Maximum number of neighbors.
     # 
     # Output parameters
-    #     vec         m x nvec    double      Array with matching neighbors of each node.
+    #   vec         m x nvec        double          Array with matching neighbors of each node.
 
     # Variable initizalization
     m   = len(p[:,0])                                                               # The size if the triangulation is obtained.

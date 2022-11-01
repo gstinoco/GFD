@@ -9,7 +9,7 @@
 
 import numpy as np
 import math
-
+ 
 def Mesh(x, y, L):
     me       = x.shape                                                              # Se encuentra el tamaño de la malla.
     m        = me[0]                                                                # Se encuentra el tamaño en x.
@@ -61,3 +61,59 @@ def Cloud(p, pb, vec, L):
             Gamma[i,j] = Gem[0,j]                                                   # Se guarda el Gamma correspondiente.
     
     return Gamma
+
+def K(x, y, L):
+    me = x.shape                                                                    # Se encuentra el tamaño de la malla.
+    m  = me[0]                                                                      # Se encuentra el número de nodos en x.
+    n  = me[1]                                                                      # Se encuentra el número de nodos en y.
+    K  = np.zeros([(m)*(n), (m)*(n)])                                               # Se define la matríz K que guardará la estructura de las Diferencias Finitas Generalizadas.
+
+    for i in np.arange(1,m-1):
+        for j in np.arange(1,n-1):
+            u = np.array(x[i-1:i+2, j-1:j+2])
+            v = np.array(y[i-1:i+2, j-1:j+2])
+            dx = np.hstack([u[0,0] - u[1,1], u[1,0] - u[1,1], \
+                            u[2,0] - u[1,1], u[0,1] - u[1,1], \
+                            u[2,1] - u[1,1], u[0,2] - u[1,1], \
+                            u[1,2] - u[1,1], u[2,2] - u[1,1]])
+            dy = np.hstack([v[0,0] - v[1,1], v[1,0] - v[1,1], \
+                            v[2,0] - v[1,1], v[0,1] - v[1,1], \
+                            v[2,1] - v[1,1], v[0,2] - v[1,1], \
+                            v[1,2] - v[1,1], v[2,2] - v[1,1]])
+            M = np.vstack([[dx], [dy], [dx**2], [dx*dy], [dy**2]])                  # Se hace la matriz M.
+            M = np.linalg.pinv(M)                                                   # Se calcula la pseudoinversa.
+            YY = M@L                                                                # Se calcula M*L.
+            Gamma = np.vstack([-sum(YY), YY])                                       # Se encuentran los balores Gamma.
+            p = m*(j) + i
+            K[p, p-1]   = Gamma[4]
+            K[p, p]     = Gamma[0]
+            K[p, p+1]   = Gamma[5]
+            K[p, p-1-m] = Gamma[1]
+            K[p, p-m]   = Gamma[2]
+            K[p, p+1-m] = Gamma[3]
+            K[p, p-1+m] = Gamma[6]
+            K[p, p+m]   = Gamma[7]
+            K[p, p+1+m] = Gamma[8]
+    
+    for j in np.arange(n):
+        K[m*j, m*j] = 0
+    
+    for i in np.arange(1,m-1):
+        p = i+(n-1)*m
+        K[i, i]                 = 0
+        K[p, p] = 0
+    
+    return K
+
+def R(u, m , n, k):
+    R = np.zeros([m*n, 1])
+
+    for i in np.arange(1,m-1):
+        R[i, 0]           = u[i, 0, k]   - u[i, 0, k-1]
+        R[i + (n-1)*m, 0] = u[i, n-1, k] - u[i, n-1, k-1]
+    
+    for j in np.arange(n):
+        R[(j)*m, 0] = u[0,   j, k] - u[0, j, k-1]
+        R[m*(j+1)-1, 0] = u[m-1, j, k] - u[m-1, j, k-1]
+    
+    return R
