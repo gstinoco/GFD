@@ -222,7 +222,7 @@ def Diffusion_Cloud(p, pb, vec, f, nu, t):
     #   vec         m x o           Array           Array with the correspondence of the o neighbors of each node.
     #   f                           Function        Function declared with the boundary condition.
     #   nu                          Real            Diffusion coefficient.
-    #   t                           Integer         Number of time steps considered.
+    #   t                           Integer         Number of time steps to be considered.
     # 
     # Output parameters
     #   u_ap        m x 1           Array           Array with the approximation computed by the routine.
