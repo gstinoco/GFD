@@ -4,6 +4,7 @@ path.insert(0, 'General/')
 import Gammas
 
 def Wave_Cloud(p, pb, vec, t, f, g, c, lam):
+    
     # Ecuación de Onda en 2D implícito implementado en nubes de puntos
     # 
     # Función que calcula una aproximación a la solución de la ecuación de Onda en 2D utilizando un esquema implícito de Diferencias Finitas Generalizadas esobrenubes de puntos.

@@ -5,7 +5,7 @@ import Gammas
 import Neighbors
 
 def Poisson_Mesh(x, y, phi, f):
-    # 2D Poisson implemented in Logically Rectangular Meshes.
+    # 2D Poisson Equaition implemented in Logically Rectangular Meshes.
     # 
     # This routine calculates an approximation to the solution of Poisson's equation in 2D using a Generalized Finite Differences scheme in logically rectangular meshes.
     # 
@@ -38,7 +38,7 @@ def Poisson_Mesh(x, y, phi, f):
         phi_ap[i, n-1] = phi(x[i, n-1], y[i, n-1])                                  # The boundary condition is assigned at the last y.
     for j in range(n):                                                              # For each of the nodes on the y boundaries.
         phi_ap[0,   j] = phi(x[0,   j], y[0,   j])                                  # The boundary condition is assigned at the first x.
-        phi_ap[m-1, j] = phi(x[m-1, j], y[m-1, j])                                  # The boundary condition is assigned at the last y.
+        phi_ap[m-1, j] = phi(x[m-1, j], y[m-1, j])                                  # The boundary condition is assigned at the last x.
 
     # Computation of Gamma values
     L = np.vstack([[0], [0], [2], [0], [2]])                                        # The values of the differential operator are assigned.
@@ -62,14 +62,14 @@ def Poisson_Mesh(x, y, phi, f):
                 phi_ap[i,j] = t;                                                    # The previously computed value is assigned.
     
     # Theoretical Solution
-    for i in range(m):                                                              # For all the nodes on the x.
-        for j in range(n):                                                          # For all the nodes on the y.
+    for i in range(m):                                                              # For all the nodes on x.
+        for j in range(n):                                                          # For all the nodes on y.
             phi_ex[i,j] = phi(x[i,j], y[i,j])                                       # The theoretical solution is computed.
     
     return phi_ap, phi_ex
 
 def Poisson_Tri(p, pb, tt, phi, f):
-    # 2D Poisson implemented in Triangulations.
+    # 2D Poisson Equation implemented in Triangulations.
     # 
     # This routine calculates an approximation to the solution of Poisson's equation in 2D using a Generalized Finite Differences scheme in triangulations.
     # 
@@ -127,7 +127,7 @@ def Poisson_Tri(p, pb, tt, phi, f):
     return phi_ap, phi_ex, vec
 
 def Poisson_Cloud(p, pb, vec, phi, f):
-    # 2D Poisson implemented in unstructured clouds of points..
+    # 2D Poisson Equation implemented in unstructured clouds of points..
     # 
     # This routine calculates an approximation to the solution of Poisson's equation in 2D using a Generalized Finite Differences scheme in unstructured clouds of points.
     # 
