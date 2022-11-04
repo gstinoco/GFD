@@ -63,7 +63,7 @@ print('The maximum mean square error in the triangulation', nube, 'is: ', er.max
 # Diffusion 2D computed in an unstructured cloud of points
 u_ap, u_ex, vec = Diffusion_2D.Diffusion_Cloud(p, pb, vec, fDIF, nu, t)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the unstructured cloud of points', malla, 'is: ', er.max())
+print('The maximum mean square error in the unstructured cloud of points', nube, 'is: ', er.max())
 #Graph.Error(er)
 #Graph.Cloud_Transient(p, u_ap, u_ex)
 

@@ -58,3 +58,6 @@ $RECYCLE.BIN/
 .ipynb_checkpoints/
 *.cpython-39*
 __*
+
+# On going
+Advection Suite/
