@@ -1,3 +1,19 @@
+# All the codes presented below were developed by:
+#   Dr. Gerardo Tinoco Guerrero
+#   Universidad Michoacana de San Nicolás de Hidalgo
+#   gerardo.tinoco@umich.mx
+#
+# With the financing of:
+#   National Council of Science and Technology, CONACyT (Consejo Nacional de Ciencia y Tecnología, CONACyT). México.
+#   Coordination of Scientific Research, CIC-UMSNH (Coordinación de la Investigación Científica de la Universidad Michoacana de San Nicolás de Hidalgo, CIC-UMSNH). México
+#   Aula CIMNE Morelia. México
+#
+# Date:
+#   November, 2022.
+#
+# Last Modification:
+#   November, 2022.
+
 import math
 from scipy.io import loadmat
 from sys import path
@@ -9,11 +25,12 @@ import Wave_2D_Implicit
 
 # Region data is loaded.
 # Triangulation and unstructured cloud of points to work in.
-nube = 'CAB_1'
+nube = 'CAB'
+size = '1'
 # This region can be changed for any other tringulation or unestructured cloud of points on Regions/Clouds/ or with any other region with the same file data structure.
 
 # Number of Time Steps
-t   = 1000
+t   = 500
 
 # Wave coefficient
 c = 1
@@ -22,7 +39,7 @@ c = 1
 lam = 0.9
 
 # All data is loaded from the file
-mat = loadmat('Regions/Clouds/' + nube + '.mat')
+mat = loadmat('Wave Suite/Data/' + nube + '/' + nube + '_' + size + '.mat')
 
 # Node data is saved
 p   = mat['p']
@@ -30,24 +47,12 @@ pb  = mat['pb']
 vec = mat['vec']
 tt  = mat['t']
 
-# Mesh to work in.
-malla = 'CAB21'
-# This region can be changed for any other mesh on Regions/Meshes/ or with any other region with the same file data structure.
-
-# All data is loaded from the file
-mat = loadmat('Regions/Meshes/' + malla + '.mat')
-
-# Node data is saved
-x  = mat['x']
-y  = mat['y']
-
 # Boundary conditions
 # The boundary conditions are defined as
 #     f = \cos(\pi ct\sqrt{2})\sin(\pi x)\sin(\pi y)
 #
 # And its derivative
 #     g = -(\pi c\sqrt{2})\sin(\pi x)\sin(\pi y)\sin(\pi ct\sqrt{2})
-
 
 def fWAV(x, y, t, c):
     fun = math.cos(math.sqrt(2)*math.pi*c*t)*math.sin(math.pi*x)*math.sin(math.pi*y);
@@ -60,27 +65,27 @@ def gWAV(x, y, t, c):
 # Wave Equation in 2D computed on triangulations.
 u_ap, u_ex = Wave_2D.Wave_Tri(p, pb, tt, fWAV, gWAV, t, c)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the triangulation', malla, 'is: ', er.max())
+print('The maximum mean square error in the triangulation with the explicit scheme is: ', er.max())
 Graph.Error(er)
 Graph.Cloud_Transient(p, u_ap, u_ex)
 
 # Wave Equation in 2D computed on a unstructured cloud of points.
 u_ap, u_ex = Wave_2D.Wave_Cloud(p, pb, vec, fWAV, gWAV, t, c)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the unstructured cloud of points', malla, 'is: ', er.max())
+print('The maximum mean square error in the unstructured cloud of points with the explicit scheme is: ', er.max())
 Graph.Error(er)
 Graph.Cloud_Transient(p, u_ap, u_ex)
 
 # Wave Equation in 2D computed on triangulations.
 u_ap, u_ex = Wave_2D_Implicit.Wave_Tri(p, pb, tt, fWAV, gWAV, t, c, lam)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the triangulation', malla, 'is: ', er.max())
+print('The maximum mean square error in the triangulation with the implicit scheme is: ', er.max())
 Graph.Error(er)
 Graph.Cloud_Transient(p, u_ap, u_ex)
 
 # Wave Equation in 2D computed on a unstructured cloud of points.
 u_ap, u_ex = Wave_2D_Implicit.Wave_Cloud(p, pb, vec, fWAV, gWAV, t, c, lam)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the unstructured cloud of points', malla, 'is: ', er.max())
+print('The maximum mean square error in the unstructured cloud of points with the implicit scheme is: ', er.max())
 Graph.Error(er)
 Graph.Cloud_Transient(p, u_ap, u_ex)
