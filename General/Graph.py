@@ -40,7 +40,6 @@ def Cloud_Static(p, u_ap, u_ex):
     min  = u_ex.min()
     max  = u_ex.max()
 
-   
     fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw = {"projection": "3d"})
 
     plt.rcParams["figure.figsize"] = (10,5)
