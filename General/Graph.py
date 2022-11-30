@@ -36,7 +36,8 @@ def Mesh_Static(x, y, u_ap, u_ex):
     ax2.plot_surface(x, y, u_ex)
     plt.show()
 
-def Cloud_Static(p, u_ap, u_ex):
+def Cloud_Static(p, tt, u_ap, u_ex):
+    tt   -= 1
     min  = u_ex.min()
     max  = u_ex.max()
 
@@ -44,18 +45,20 @@ def Cloud_Static(p, u_ap, u_ex):
 
     plt.rcParams["figure.figsize"] = (10,5)
     
-    ax1.scatter(p[:,0], p[:,1], u_ap[:])
+    #ax1.scatter(p[:,0], p[:,1], u_ap[:])
+    ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:], triangles=tt)
     ax1.set_zlim([min, max])
     ax1.set_title('Approximation')
     
-    ax2.scatter(p[:,0], p[:,1], u_ex[:])
+    #ax2.scatter(p[:,0], p[:,1], u_ex[:])
+    ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:], triangles=tt)
     ax2.set_zlim([min, max])
     ax2.set_title('Theoretical Solution')
 
     plt.show()
 
 def Mesh_Transient(x, y, u_ap, u_ex):
-    t = len(u_ex[0,0,:])
+    t    = len(u_ex[0,0,:])
     step = math.ceil(t/100)
     min  = u_ex.min()
     max  = u_ex.max()
@@ -80,8 +83,9 @@ def Mesh_Transient(x, y, u_ap, u_ex):
 
         plt.pause(0.1)
 
-def Cloud_Transient(p, u_ap, u_ex):
-    t = len(u_ex[0,:])
+def Cloud_Transient(p, tt, u_ap, u_ex):
+    tt  -= 1
+    t    = len(u_ex[0,:])
     step = math.ceil(t/100)
     min  = u_ex.min()
     max  = u_ex.max()
@@ -95,18 +99,19 @@ def Cloud_Transient(p, u_ap, u_ex):
         tin = float(T[k])
         plt.suptitle('Solution at t = %1.3f s.' %tin)
 
-        ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
+        ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k], triangles=tt)
         ax1.set_zlim([min, max])
         ax1.set_title('Approximation')
         
-        ax2.scatter(p[:,0], p[:,1], u_ex[:, k])
+        ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:,k], triangles=tt)
         ax2.set_zlim([min, max])
         ax2.set_title('Theoretical Solution')
 
         plt.pause(0.1)
         
-def Cloud_Transient_Vid(p, u_ap, u_ex, nube):
-    t = len(u_ex[0,:])
+def Cloud_Transient_Vid(p, tt, u_ap, u_ex, nube):
+    tt  -= tt
+    t    = len(u_ex[0,:])
     step = math.ceil(t/1000)
     min  = u_ex.min()
     max  = u_ex.max()
@@ -121,11 +126,11 @@ def Cloud_Transient_Vid(p, u_ap, u_ex, nube):
         tin = float(T[k])
         plt.suptitle('Solution at t = %1.3f s.' %tin)
         
-        ax1.scatter(p[:,0], p[:,1], u_ap[:, k])
+        ax1.plot_trisurf(p[:,0], p[:,1], u_ap[:,k], triangles=tt)
         ax1.set_zlim([min, max])
         ax1.set_title('Approximation')
         
-        ax2.scatter(p[:,0], p[:,1], u_ex[:, k])
+        ax2.plot_trisurf(p[:,0], p[:,1], u_ex[:,k], triangles=tt)
         ax2.set_zlim([min, max])
         ax2.set_title('Theoretical Solution')
   
