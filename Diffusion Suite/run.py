@@ -42,6 +42,7 @@ p   = mat['p']
 pb  = mat['pb']
 vec = mat['vec']
 tt  = mat['t']
+tt  -= 1
 
 # Mesh to work in.
 malla = 'CAB21'
@@ -74,7 +75,7 @@ def fDIF(x, y, t, v):
 #er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
 #print('The maximum mean square error in the triangulation', nube, 'is: ', er.max())
 #Graph.Error(er)
-#Graph.Cloud_Transient(p, u_ap, u_ex)
+#Graph.Cloud_Transient(p, tt, u_ap, u_ex)
 
 # Diffusion 2D computed in an unstructured cloud of points
 u_ap, u_ex, vec = Diffusion_2D.Diffusion_Cloud(p, pb, vec, fDIF, nu, t)
