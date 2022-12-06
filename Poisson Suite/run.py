@@ -35,7 +35,6 @@ p   = mat['p']
 pb  = mat['pb']
 vec = mat['vec']
 tt  = mat['t']
-tt  -= 1
 
 # Mesh to work in.
 malla = 'CAB21'
