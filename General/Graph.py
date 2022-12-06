@@ -37,7 +37,6 @@ def Mesh_Static(x, y, u_ap, u_ex):
     plt.show()
 
 def Cloud_Static(p, tt, u_ap, u_ex):
-    tt   -= 1
     min  = u_ex.min()
     max  = u_ex.max()
 
@@ -84,7 +83,6 @@ def Mesh_Transient(x, y, u_ap, u_ex):
         plt.pause(0.1)
 
 def Cloud_Transient(p, tt, u_ap, u_ex):
-    tt  -= 1
     t    = len(u_ex[0,:])
     step = math.ceil(t/100)
     min  = u_ex.min()
@@ -110,7 +108,6 @@ def Cloud_Transient(p, tt, u_ap, u_ex):
         plt.pause(0.1)
         
 def Cloud_Transient_Vid(p, tt, u_ap, u_ex, nube):
-    tt  -= tt
     t    = len(u_ex[0,:])
     step = math.ceil(t/1000)
     min  = u_ex.min()
