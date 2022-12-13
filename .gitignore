@@ -58,5 +58,6 @@ $RECYCLE.BIN/
 .ipynb_checkpoints/
 *.cpython-39*
 __*
+.vscode
 
 # On going
