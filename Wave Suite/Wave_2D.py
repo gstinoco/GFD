@@ -97,7 +97,7 @@ def Wave_Tri(p, pb, tt, f, g, t, c):
         for i in np.arange(m):                                                      # For each of the nodes.
             u_ex[i,k] = f(p[i,0], p[i,1], T[k], c)                                  # The theoretical solution is computed.
 
-    return u_ap, u_ex
+    return u_ap, u_ex, vec
 
 def Wave_Cloud(p, pb, vec, f, g, t, c):
     # Wave Equation 2D implemented on Unstructured Clouds of Points
@@ -121,7 +121,7 @@ def Wave_Cloud(p, pb, vec, f, g, t, c):
     #   u_ap        m x n x t       Array           Array with the approximation computed by the routine.
     #   u_ex        m x n x t       Array           Array with the theoretical solution.
 
-    # Variable initizalization
+    # Variable initialization
     m    = len(p[:,0])                                                              # The total number of nodes is calculated.
     mf   = len(pb[:,0])                                                             # The number of boundary nodes is calculated.
     T    = np.linspace(0,3,t)                                                       # Time discretization.

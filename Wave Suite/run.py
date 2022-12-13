@@ -65,7 +65,7 @@ def gWAV(x, y, t, c):
     return fun
 
 # Wave Equation in 2D computed on triangulations.
-u_ap, u_ex = Wave_2D.Wave_Tri(p, pb, tt, fWAV, gWAV, t, c)
+u_ap, u_ex, vec = Wave_2D.Wave_Tri(p, pb, tt, fWAV, gWAV, t, c)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
 print('The maximum mean square error in the triangulation with the explicit scheme is: ', er.max())
 Graph.Error(er)
