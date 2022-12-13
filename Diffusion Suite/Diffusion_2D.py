@@ -212,7 +212,7 @@ def Diffusion_Tri(p, pb, tt, f, nu, t):
             utemp = 0                                                               # utemp initialization in 0.
             nvec = sum(vec[i,:] != -1)                                              # Number of neighbor nodes of the central node.
             for j in np.arange(1,nvec+1):                                           # For each of the neighbor nodes.
-                utemp = utemp + Gamma[i,j]*u_ap[int(vec[i, j-1]), k-1]                   # utemp computation with the neighbors.
+                utemp = utemp + Gamma[i,j]*u_ap[int(vec[i, j-1]), k-1]              # utemp computation with the neighbors.
             utemp = utemp + Gamma[i,0]*u_ap[i, k-1]                                 # The central node is added to the approximation.
             u_ap[i,k] = u_ap[i, k-1] + utemp                                        # u_ap value is assigned.
 
@@ -223,7 +223,7 @@ def Diffusion_Tri(p, pb, tt, f, nu, t):
 
     return u_ap, u_ex, vec
 
-def Diffusion_Cloud(p, pb, vec, f, nu, t):
+def Diffusion_Cloud(p, pb, f, nu, t):
     # 2D Diffusion Equation implemented in Unstructured Clouds of Points.
     # 
     # This routine calculates an approximation to the solution of Diffusion equation in 2D using a Generalized Finite Differences scheme on unstructured clouds of points.
@@ -262,7 +262,7 @@ def Diffusion_Cloud(p, pb, vec, f, nu, t):
         u_ap[i, 0] = f(p[i, 0], p[i, 1], T[0], nu)                                  # The initial condition is assigned.
     
     # Neighbor search for all the nodes.
-    vec = Neighbors.Cloud(p, 9)                                                     # Neighbor search with the proper routine.
+    vec = Neighbors.Cloud(p, pb, 9)                                                 # Neighbor search with the proper routine.
 
     # Computation of Gamma values
     L = np.vstack([[0], [0], [2*nu*dt], [0], [2*nu*dt]])                            # The values of the differential operator are assigned.
@@ -272,9 +272,9 @@ def Diffusion_Cloud(p, pb, vec, f, nu, t):
     for k in np.arange(1,t):                                                        # For each of the time steps.
         for i in np.arange(mf, m):                                                  # For each of the interior nodes.
             utemp = 0                                                               # utemp initialization in 0.
-            nvec = sum(vec[i,:] != 0)                                               # Number of neighbor nodes of the central node.
+            nvec = sum(vec[i,:] != -1)                                              # Number of neighbor nodes of the central node.
             for j in np.arange(1,nvec+1):                                           # For each of the neighbor nodes.
-                utemp = utemp + Gamma[i,j]*u_ap[int(vec[i, j-1])-1, k-1]            # utemp computation with the neighbors.
+                utemp = utemp + Gamma[i,j]*u_ap[int(vec[i, j-1]), k-1]              # utemp computation with the neighbors.
             utemp = utemp + Gamma[i,0]*u_ap[i, k-1]                                 # The central node is added to the approximation.
             u_ap[i,k] = u_ap[i, k-1] + utemp                                        # u_ap value is assigned.
 

@@ -12,7 +12,7 @@
 #   November, 2022.
 #
 # Last Modification:
-#   November, 2022.
+#   December, 2022.
 
 import math
 from scipy.io import loadmat
@@ -23,12 +23,15 @@ import Graph
 import Poisson_2D
 
 # Region data is loaded.
-# Triangulation and unstructured cloud of points to work in.
-nube = 'PATZ_1'
-# This region can be changed for any other tringulation or unestructured cloud of points on Regions/Clouds/ or with any other region with the same file data structure.
+# Triangulation or unstructured cloud of points to work in.
+region = 'CAB'
+cloud = '1'
+# Mesh size to work in.
+mesh = '21'
+# This region can be changed for any other triangulation, unstructured cloud of points or mesh on Regions/ or with any other region with the same file data structure.
 
 # All data is loaded from the file
-mat = loadmat('Regions/Clouds/' + nube + '.mat')
+mat = loadmat('Regions/Clouds/' + region + '_' + cloud + '.mat')
 
 # Node data is saved
 p   = mat['p']
@@ -38,12 +41,8 @@ tt  = mat['t']
 if tt.min() == 1:
     tt -= 1
 
-# Mesh to work in.
-malla = 'CAB21'
-# This region can be changed for any other mesh on Regions/Meshes/ or with any other region with the same file data structure.
-
 # All data is loaded from the file
-mat = loadmat('Regions/Meshes/' + malla + '.mat')
+mat = loadmat('Regions/Meshes/' + region + mesh + '.mat')
 
 # Node data is saved
 x  = mat['x']
@@ -66,17 +65,17 @@ def f(x,y):
 # Poisson 2D computed in a logically rectangular mesh
 phi_ap, phi_ex = Poisson_2D.Poisson_Mesh(x, y, phi, f)
 er = Errors.Mesh_Static(x, y, phi_ap, phi_ex)
-print('The mean square error in the mesh', malla, 'is: ', er)
-#Graph.Mesh_Static(x, y, phi_ap, phi_ex)
-
-# Poisson 2D computed in an unstructured cloud of points
-#phi_ap, phi_ex = Poisson_2D.Poisson_Cloud(p, pb, phi, f)
-#er = Errors.Cloud_Static(p, vec, phi_ap, phi_ex)
-#print('The mean square error in the unstructured cloud of points', nube, 'is: ', er)
-#Graph.Cloud_Static(p, tt, phi_ap, phi_ex)
+print('The mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er)
+Graph.Mesh_Static(x, y, phi_ap, phi_ex)
 
 # Poisson 2D computed in a triangulation
 phi_ap, phi_ex, vec = Poisson_2D.Poisson_Tri(p, pb, tt, phi, f)
 er = Errors.Cloud_Static(p, vec, phi_ap, phi_ex)
-print('The mean square error in the triangulation', nube, 'is: ', er)
-#Graph.Cloud_Static(p, tt, phi_ap, phi_ex)
+print('The mean square error in the triangulation', region, 'with size', cloud, 'is: ', er)
+Graph.Cloud_Static(p, tt, phi_ap, phi_ex)
+
+# Poisson 2D computed in an unstructured cloud of points
+phi_ap, phi_ex, vec = Poisson_2D.Poisson_Cloud(p, pb, phi, f)
+er = Errors.Cloud_Static(p, vec, phi_ap, phi_ex)
+print('The mean square error in the unstructured cloud of points', region, 'with size', cloud, 'is: ', er)
+Graph.Cloud_Static(p, tt, phi_ap, phi_ex)
