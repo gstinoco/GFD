@@ -42,7 +42,7 @@ def Wave_Tri(p, pb, tt, f, g, t, c):
     #   u_ap        m x n x t       Array           Array with the approximation computed by the routine.
     #   u_ex        m x n x t       Array           Array with the theoretical solution.
 
-    # Variable initizalization
+    # Variable initialization
     m    = len(p[:,0])                                                              # The total number of nodes is calculated.
     mf   = len(pb[:,0])                                                             # The number of boundary nodes is calculated.
     T    = np.linspace(0,3,t)                                                       # Time discretization.
@@ -61,7 +61,7 @@ def Wave_Tri(p, pb, tt, f, g, t, c):
         u_ap[i, 0] = f(p[i, 0], p[i, 1], T[0], c)                                   # The initial condition is assigned.
     
     # Neighbor search for all the nodes.
-    vec = Neighbors.Neighbors_Tri(p, tt, 9)                                         # Neighbor search with the proper routine.
+    vec = Neighbors.Triangulation(p, tt, 9)                                         # Neighbor search with the proper routine.
 
      # Computation of Gamma values
     L = np.vstack([[0], [0], [2], [0], [2]])                                        # The values of the differential operator are assigned.
@@ -85,7 +85,7 @@ def Wave_Tri(p, pb, tt, f, g, t, c):
     for k in np.arange(2,t):                                                        # For all the other time steps.
         for i in np.arange(mf, m):                                                  # For all the interior nodes.
             utemp = 0                                                               # utemp is initialized with 0.
-            nvec = sum(vec[i,:] != 0)                                               # Number of neighbor nodes of the central node.
+            nvec = sum(vec[i,:] != -1)                                               # Number of neighbor nodes of the central node.
             for j in np.arange(1,nvec+1):                                           # For each of the neighbor nodes.
                 utemp = utemp + cdt*Gamma[i,j]*u_ap[int(vec[i, j-1])-1, k-1]        # utemp computation with the neighbors.
 
@@ -161,7 +161,7 @@ def Wave_Cloud(p, pb, vec, f, g, t, c):
     for k in np.arange(2,t):                                                        # For all the other time steps.
         for i in np.arange(mf, m):                                                  # For all the interior nodes.
             utemp = 0                                                               # utemp is initialized with 0.
-            nvec = sum(vec[i,:] != 0)                                               # Number of neighbor nodes of the central node.
+            nvec = sum(vec[i,:] != -1)                                               # Number of neighbor nodes of the central node.
             for j in np.arange(1,nvec+1):                                           # For each of the neighbor nodes.
                 utemp = utemp + cdt*Gamma[i,j]*u_ap[int(vec[i, j-1])-1, k-1]        # utemp computation with the neighbors.
 

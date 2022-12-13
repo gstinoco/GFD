@@ -104,7 +104,7 @@ def Poisson_Tri(p, pb, tt, phi, f):
     #   phi_ap      m x 1           Array           Array with the approximation computed by the routine.
     #   phi_ex      m x 1           Array           Array with the theoretical solution.
     
-    # Variable initizalization
+    # Variable initialization
     m        = len(p[:,0])                                                          # The total number of nodes is calculated.
     mf       = len(pb[:,0])                                                         # The number of boundary nodes is calculated.
     nvec     = 9                                                                    # The maximum number of nodes.
@@ -117,8 +117,8 @@ def Poisson_Tri(p, pb, tt, phi, f):
     for i in np.arange(mf):                                                         # For each of the boundary nodes.
         phi_ap[i]   = phi(pb[i, 0],   pb[i, 1])                                     # The boundary condition is assigned.
     
-    # Search for neighbor nodes
-    vec = Neighbors.Neighbors_Tri(p, tt, nvec)                                      # Neighbors search.
+    # Neighbor search for all the nodes.
+    vec = Neighbors.Triangulation(p, tt, nvec)                                      # Neighbor search with the proper routine.
 
     # Computation of Gamma values
     L = np.vstack([[0], [0], [2], [0], [2]])                                        # The values of the differential operator are assigned.
@@ -142,7 +142,7 @@ def Poisson_Tri(p, pb, tt, phi, f):
 
     return phi_ap, phi_ex, vec
 
-def Poisson_Cloud(p, pb, vec, phi, f):
+def Poisson_Cloud(p, pb, phi, f):
     # 2D Poisson Equation implemented in unstructured clouds of points..
     # 
     # This routine calculates an approximation to the solution of Poisson's equation in 2D using a Generalized Finite Differences scheme in unstructured clouds of points.
@@ -154,7 +154,6 @@ def Poisson_Cloud(p, pb, vec, phi, f):
     # Input parameters
     #   p           m x 2           Array           Array with the coordinates of the nodes.
     #   pb          b x 2           Array           Array with the coordinates of the boundary nodes.
-    #   vec         m x nvec        Array           Array with the correspondence of the nvec neighbors of each node.
     #   phi                         function        Function declared with the boundary condition.
     #   f                           function        Function declared with the right side of the equation.
     # 
@@ -174,6 +173,9 @@ def Poisson_Cloud(p, pb, vec, phi, f):
     for i in np.arange(mf):                                                         # For each of the boundary nodes.
         phi_ap[i]   = phi(pb[i, 0],   pb[i, 1])                                     # The boundary condition is assigned.
     
+    # Neighbor search for all the nodes.
+    vec = Neighbors.Cloud(p, 9)                                                     # Neighbor search with the proper routine.
+
     # Computation of Gamma values
     L = np.vstack([[0], [0], [2], [0], [2]])                                        # The values of the differential operator are assigned.
     Gamma = Gammas.Cloud(p, pb, vec, L)                                             # Gamma computation.
