@@ -25,7 +25,7 @@ import Wave_2D_Implicit
 
 # Region data is loaded.
 # Triangulation and unstructured cloud of points to work in.
-nube = 'CAB'
+cloud = 'CAB'
 size = '1'
 # This region can be changed for any other triangulation or unstructured cloud of points on Regions/Clouds/ or with any other region with the same file data structure.
 
@@ -39,7 +39,7 @@ c = 1
 lam = 0.9
 
 # All data is loaded from the file
-mat = loadmat('Wave Suite/Data/' + nube + '/' + nube + '_' + size + '.mat')
+mat = loadmat('Wave Suite/Data/' + cloud + '/' + cloud + '_' + size + '.mat')
 
 # Node data is saved
 p   = mat['p']
