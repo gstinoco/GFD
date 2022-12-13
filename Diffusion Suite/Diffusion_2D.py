@@ -40,7 +40,7 @@ def Diffusion_Mesh(x, y, f, nu, t):
     #   u_ap        m x n x t       Array           Array with the approximation computed by the routine.
     #   u_ex        m x n x t       Array           Array with the theoretical solution.
 
-    # Variable initizalization
+    # Variable initialization
     me   = x.shape                                                                  # The size of the mesh is found.
     m    = me[0]                                                                    # The number of nodes in x.
     n    = me[1]                                                                    # The number of nodes in y.
@@ -111,7 +111,7 @@ def Diffusion_Mesh_K(x, y, f, nu, t):
     #   u_ap        m x n x t       Array           Array with the approximation computed by the routine.
     #   u_ex        m x n x t       Array           Array with the theoretical solution.
 
-    # Variable initizalization
+    # Variable initialization
     me   = x.shape                                                                  # The size of the mesh is found.
     m    = me[0]                                                                    # The number of nodes in x.
     n    = me[1]                                                                    # The number of nodes in y.
@@ -182,7 +182,7 @@ def Diffusion_Tri(p, pb, tt, f, nu, t):
     #   u_ap        m x 1           Array           Array with the approximation computed by the routine.
     #   u_ex        m x 1           Array           Array with the theoretical solution.
 
-    # Variable initizalization
+    # Variable initialization
     m    = len(p[:,0])                                                              # The total number of nodes is calculated.
     mf   = len(pb[:,0])                                                             # The number of boundary nodes is calculated.
     T    = np.linspace(0,1,t)                                                       # Time discretization.
@@ -244,7 +244,7 @@ def Diffusion_Cloud(p, pb, vec, f, nu, t):
     #   u_ap        m x 1           Array           Array with the approximation computed by the routine.
     #   u_ex        m x 1           Array           Array with the theoretical solution.
 
-    # Variable initizalization
+    # Variable initialization
     m    = len(p[:,0])                                                              # The total number of nodes is calculated.
     mf   = len(pb[:,0])                                                             # The number of boundary nodes is calculated.
     T    = np.linspace(0,1,t)                                                       # Time discretization.

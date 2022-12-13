@@ -30,7 +30,7 @@ def Neighbors_Tri(p, tt, nvec):
     # Output parameters
     #   vec         m x nvec        double          Array with matching neighbors of each node.
 
-    # Variable initizalization
+    # Variable initialization
     m   = len(p[:,0])                                                               # The size if the triangulation is obtained.
     vec = np.zeros([m, nvec*2])                                                     # The array for the neighbors is initialized.
 

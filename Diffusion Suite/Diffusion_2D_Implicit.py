@@ -41,7 +41,7 @@ def Diffusion_Mesh_K(x, y, f, nu, t, lam):
     #   u_ap        m x n x t       Array           Array with the approximation computed by the routine.
     #   u_ex        m x n x t       Array           Array with the theoretical solution.
 
-    # Variable initizalization
+    # Variable initialization
     me   = x.shape                                                                  # The size of the mesh is found.
     m    = me[0]                                                                    # The number of nodes in x.
     n    = me[1]                                                                    # The number of nodes in y.
