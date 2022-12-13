@@ -69,7 +69,7 @@ def Mesh_Static(x, y, u_ap, u_ex):
 
     for i in np.arange(m):                                                          # For each of the nodes on the x axis.
         for j in np.arange(n):                                                      # For each of the nodes on the y axis.
-            er = er + area[i,j]*(u_ap[i,j] - u_ex[i,j])**2                          # Mean saquare error computation.
+            er = er + area[i,j]*(u_ap[i,j] - u_ex[i,j])**2                          # Mean square error computation.
     
     er = math.sqrt(er)                                                              # The square root is computed.
     
