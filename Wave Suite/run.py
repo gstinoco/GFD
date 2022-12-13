@@ -27,7 +27,7 @@ import Wave_2D_Implicit
 # Triangulation and unstructured cloud of points to work in.
 nube = 'CAB'
 size = '1'
-# This region can be changed for any other tringulation or unestructured cloud of points on Regions/Clouds/ or with any other region with the same file data structure.
+# This region can be changed for any other triangulation or unstructured cloud of points on Regions/Clouds/ or with any other region with the same file data structure.
 
 # Number of Time Steps
 t   = 500
@@ -46,7 +46,8 @@ p   = mat['p']
 pb  = mat['pb']
 vec = mat['vec']
 tt  = mat['t']
-tt  -= 1
+if tt.min() == 1:
+    tt -= 1
 
 # Boundary conditions
 # The boundary conditions are defined as

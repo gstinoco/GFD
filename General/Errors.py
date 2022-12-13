@@ -41,7 +41,7 @@ def PolyArea(x,y):
  
 def Mesh_Static(x, y, u_ap, u_ex):
     # Mesh_Static
-    # Routine to compute the error in a logically rectanguar mesh for a problem that does not depend on time.
+    # Routine to compute the error in a logically rectangular mesh for a problem that does not depend on time.
     # The polygon used to calculate the area is the one defined by all the immediate neighbors of the central node.
     #
     # Input parameters
@@ -94,17 +94,17 @@ def Cloud_Static(p, vec, u_ap, u_ex):
     area = np.zeros(m)                                                              # area initialization with zeros.
 
     for i in np.arange(m):
-        nvec = sum(vec[i,:] != 0)                                                   # The number of neighbors of the central node.
+        nvec = sum(vec[i,:] != -1)                                                  # The number of neighbors of the central node.
         polix = np.zeros([nvec])                                                    # The x-values of the polygon are stored.
         poliy = np.zeros([nvec])                                                    # The y-values of the polygon are stored.
         for j in np.arange(nvec):                                                   # For each of the neighbor nodes.
-            vec1 = int(vec[i,j])-1                                                  # The index of the node is found.
+            vec1 = int(vec[i,j])                                                    # The index of the node is found.
             polix[j] = p[vec1,0]                                                    # The x coordinate of the node is stored.
             poliy[j] = p[vec1,1]                                                    # The y coordinate of the node is stored.
         area[i] = PolyArea(polix, poliy)                                            # Area computation.
 
     for i in np.arange(m):                                                          # For each of the nodes.
-        er = er + area[i]*(u_ap[i] - u_ex[i])**2                                    # Mean saquare error computation.
+        er = er + area[i]*(u_ap[i] - u_ex[i])**2                                    # Mean square error computation.
 
     er = math.sqrt(er)                                                              # The square root is computed.
     
@@ -112,7 +112,7 @@ def Cloud_Static(p, vec, u_ap, u_ex):
 
 def Mesh_Transient(x, y, u_ap, u_ex):
     # Mesh_Transient
-    # Routine to compute the error in a logically rectanguar mesh for a problem that depends on time.
+    # Routine to compute the error in a logically rectangular mesh for a problem that depends on time.
     # The polygon used to calculate the area is the one defined by all the immediate neighbors of the central node.
     #
     # Input parameters
@@ -142,14 +142,14 @@ def Mesh_Transient(x, y, u_ap, u_ex):
     for k in np.arange(t):                                                          # For each time step.
         for i in np.arange(1,m-1):                                                  # For each of the nodes on the x axis.
             for j in np.arange(1,n-1):                                              # For each of the nodes on the y axis.
-                er[k] = er[k] + area[i,j]*(u_ap[i,j,k] - u_ex[i,j,k])**2            # Mean saquare error computation.
+                er[k] = er[k] + area[i,j]*(u_ap[i,j,k] - u_ex[i,j,k])**2            # Mean square error computation.
 
         er[k] = math.sqrt(er[k])                                                    # The square root is computed.
     
     return er
 
 def Cloud_Transient(p, vec, u_ap, u_ex):
-    # Cloud_Tansient
+    # Cloud_Transient
     # Routine to compute the error in a triangulation or an unstructured cloud of points for a problem that depends on time.
     # The polygon used to calculate the area is the one defined by all the immediate neighbors of the central node.
     #
@@ -168,18 +168,18 @@ def Cloud_Transient(p, vec, u_ap, u_ex):
     area = np.zeros(m)                                                              # area initialization with zeros.
 
     for i in np.arange(m):
-        nvec = sum(vec[i,:] != 0)                                                   # The number of neighbors of the central node.
+        nvec = sum(vec[i,:] != -1)                                                  # The number of neighbors of the central node.
         polix = np.zeros([nvec])                                                    # The x-values of the polygon are stored.
         poliy = np.zeros([nvec])                                                    # The y-values of the polygon are stored.
         for j in np.arange(nvec):                                                   # For each of the neighbor nodes.
-            vec1 = int(vec[i,j])-1                                                  # The index of the node is found.
+            vec1 = int(vec[i,j])                                                    # The index of the node is found.
             polix[j] = p[vec1,0]                                                    # The x coordinate of the node is stored.
             poliy[j] = p[vec1,1]                                                    # The y coordinate of the node is stored.
         area[i] = PolyArea(polix, poliy)                                            # Area computation.
 
     for k in np.arange(t):                                                          # For each time step.
         for i in np.arange(m):                                                      # For each of the nodes.
-            er[k] = er[k] + area[i]*(u_ap[i,k] - u_ex[i,k])**2                      # Mean saquare error computation.
+            er[k] = er[k] + area[i]*(u_ap[i,k] - u_ex[i,k])**2                      # Mean square error computation.
 
         er[k] = math.sqrt(er[k])                                                    # The square root is computed.
     

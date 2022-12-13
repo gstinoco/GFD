@@ -35,7 +35,8 @@ p   = mat['p']
 pb  = mat['pb']
 vec = mat['vec']
 tt  = mat['t']
-tt  -= 1
+if tt.min() == 1:
+    tt -= 1
 
 # Mesh to work in.
 malla = 'CAB21'
@@ -63,19 +64,19 @@ def f(x,y):
     return fun
 
 # Poisson 2D computed in a logically rectangular mesh
-#phi_ap, phi_ex = Poisson_2D.Poisson_Mesh(x, y, phi, f)
-#er = Errors.Mesh_Static(x, y, phi_ap, phi_ex)
-#print('The mean square error in the mesh', malla, 'is: ', er)
+phi_ap, phi_ex = Poisson_2D.Poisson_Mesh(x, y, phi, f)
+er = Errors.Mesh_Static(x, y, phi_ap, phi_ex)
+print('The mean square error in the mesh', malla, 'is: ', er)
 #Graph.Mesh_Static(x, y, phi_ap, phi_ex)
 
 # Poisson 2D computed in an unstructured cloud of points
-phi_ap, phi_ex = Poisson_2D.Poisson_Cloud(p, pb, vec, phi, f)
+#phi_ap, phi_ex = Poisson_2D.Poisson_Cloud(p, pb, phi, f)
 #er = Errors.Cloud_Static(p, vec, phi_ap, phi_ex)
 #print('The mean square error in the unstructured cloud of points', nube, 'is: ', er)
-Graph.Cloud_Static(p, tt, phi_ap, phi_ex)
+#Graph.Cloud_Static(p, tt, phi_ap, phi_ex)
 
 # Poisson 2D computed in a triangulation
-#phi_ap, phi_ex, vec = Poisson_2D.Poisson_Tri(p, pb, tt, phi, f)
-#er = Errors.Cloud_Static(p, vec, phi_ap, phi_ex)
-#print('The mean square error in the triangulation', nube, 'is: ', er)
+phi_ap, phi_ex, vec = Poisson_2D.Poisson_Tri(p, pb, tt, phi, f)
+er = Errors.Cloud_Static(p, vec, phi_ap, phi_ex)
+print('The mean square error in the triangulation', nube, 'is: ', er)
 #Graph.Cloud_Static(p, tt, phi_ap, phi_ex)

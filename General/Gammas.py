@@ -59,12 +59,12 @@ def Cloud(p, pb, vec, L):
     Gamma = np.zeros([m, nvec])                                                     # Se inicializa el arreglo para guardar las Gammas.
 
     for i in np.arange(mf, m):                                                      # Para cada uno de los nodos internos.
-        nvec = sum(vec[i,:] != 0)                                                   # Se calcula el número de vecinos que tiene el nodo.
+        nvec = sum(vec[i,:] != -1)                                                   # Se calcula el número de vecinos que tiene el nodo.
         dx = np.zeros([nvec])                                                       # Se inicializa dx en 0.
         dy = np.zeros([nvec])                                                       # Se inicializa dy en 0.
 
         for j in np.arange(nvec):                                                   # Para cada uno de los nodos vecinos.
-            vec1 = int(vec[i, j])-1                                                 # Se obtiene el índice del vecino.
+            vec1 = int(vec[i, j])                                                   # Se obtiene el índice del vecino.
             dx[j] = p[vec1, 0] - p[i,0]                                             # Se calcula dx.
             dy[j] = p[vec1, 1] - p[i,1]                                             # Se calcula dy.
 

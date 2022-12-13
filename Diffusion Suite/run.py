@@ -25,7 +25,7 @@ import Diffusion_2D_Implicit
 
 # Region data is loaded.
 # Triangulation and unstructured cloud of points to work in.
-nube = 'PATZ_1'
+nube = 'CAB_1'
 # This region can be changed for any other triangulation or unstructured cloud of points on Regions/Clouds/ or with any other region with the same file data structure.
 
 # Number of Time Steps
@@ -42,7 +42,8 @@ p   = mat['p']
 pb  = mat['pb']
 vec = mat['vec']
 tt  = mat['t']
-#tt -= 1
+if tt.min() == 1:
+    tt -= 1
 
 # Mesh to work in.
 malla = 'CAB21'
@@ -64,9 +65,9 @@ def fDIF(x, y, t, v):
     return fun
 
 # Diffusion 2D computed in a logically rectangular mesh
-#u_ap, u_ex = Diffusion_2D.Diffusion_Mesh(x, y, fDIF, nu, t)
-#er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
-#print('The maximum mean square error in the mesh', malla, 'is: ', er.max())
+u_ap, u_ex = Diffusion_2D.Diffusion_Mesh(x, y, fDIF, nu, t)
+er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
+print('The maximum mean square error in the mesh', malla, 'is: ', er.max())
 #Graph.Error(er)
 #Graph.Mesh_Transient(x, y, u_ap, u_ex)
 
@@ -85,15 +86,15 @@ print('The maximum mean square error in the triangulation', nube, 'is: ', er.max
 #Graph.Cloud_Transient(p, tt, u_ap, u_ex)
 
 # Diffusion 2D computed in a logically rectangular mesh with Matrix Formulation
-#u_ap, u_ex = Diffusion_2D.Diffusion_Mesh_K(x, y, fDIF, nu, t)
-#er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
-#print('The maximum mean square error in the mesh', malla, 'is: ', er.max())
+u_ap, u_ex = Diffusion_2D.Diffusion_Mesh_K(x, y, fDIF, nu, t)
+er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
+print('The maximum mean square error in the mesh', malla, 'is: ', er.max())
 #Graph.Error(er)
 #Graph.Mesh_Transient(x, y, u_ap, u_ex)
 
 # Diffusion 2D computed in a logically rectangular mesh with an implicit scheme with Matrix Formulation
-#u_ap, u_ex = Diffusion_2D_Implicit.Diffusion_Mesh_K(x, y, fDIF, nu, t, 0)
-#er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
-#print('The maximum mean square error in the mesh', malla, 'is: ', er.max())
+u_ap, u_ex = Diffusion_2D_Implicit.Diffusion_Mesh_K(x, y, fDIF, nu, t, 0)
+er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
+print('The maximum mean square error in the mesh', malla, 'is: ', er.max())
 #Graph.Error(er)
 #Graph.Mesh_Transient(x, y, u_ap, u_ex)
