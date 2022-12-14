@@ -65,35 +65,35 @@ def fDIF(x, y, t, v):
 
 # Diffusion 2D computed in a logically rectangular mesh
 u_ap, u_ex = Diffusion_2D.Diffusion_Mesh(x, y, fDIF, nu, t)
-er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
-print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
-Graph.Error(er)
+#er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
+#print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
+#Graph.Error(er)
 Graph.Mesh_Transient(x, y, u_ap, u_ex)
 
 # Diffusion 2D computed in a triangulation
 u_ap, u_ex, vec = Diffusion_2D.Diffusion_Tri(p, pb, tt, fDIF, nu, t)
-er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the triangulation', region, 'with size', cloud, 'is: ', er.max())
-Graph.Error(er)
+#er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
+#print('The maximum mean square error in the triangulation', region, 'with size', cloud, 'is: ', er.max())
+#Graph.Error(er)
 Graph.Cloud_Transient(p, tt, u_ap, u_ex)
 
 # Diffusion 2D computed in an unstructured cloud of points
-u_ap, u_ex, vec = Diffusion_2D.Diffusion_Cloud(p, pb, fDIF, nu, t)
-er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the unstructured cloud of points', region, 'with size', cloud, 'is: ', er.max())
-Graph.Error(er)
-Graph.Cloud_Transient(p, tt, u_ap, u_ex)
+#u_ap, u_ex, vec = Diffusion_2D.Diffusion_Cloud(p, pb, fDIF, nu, t)
+#er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
+#print('The maximum mean square error in the unstructured cloud of points', region, 'with size', cloud, 'is: ', er.max())
+#Graph.Error(er)
+#Graph.Cloud_Transient(p, tt, u_ap, u_ex)
 
 # Diffusion 2D computed in a logically rectangular mesh with Matrix Formulation
-u_ap, u_ex = Diffusion_2D.Diffusion_Mesh_K(x, y, fDIF, nu, t)
-er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
-print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
-Graph.Error(er)
-Graph.Mesh_Transient(x, y, u_ap, u_ex)
+#u_ap, u_ex = Diffusion_2D.Diffusion_Mesh_K(x, y, fDIF, nu, t)
+#er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
+#print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
+#Graph.Error(er)
+#Graph.Mesh_Transient(x, y, u_ap, u_ex)
 
 # Diffusion 2D computed in a logically rectangular mesh with an implicit scheme with Matrix Formulation
-u_ap, u_ex = Diffusion_2D_Implicit.Diffusion_Mesh_K(x, y, fDIF, nu, t, 0)
-er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
-print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
-Graph.Error(er)
-Graph.Mesh_Transient(x, y, u_ap, u_ex)
+#u_ap, u_ex = Diffusion_2D_Implicit.Diffusion_Mesh_K(x, y, fDIF, nu, t, 0)
+#er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
+#print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
+#Graph.Error(er)
+#Graph.Mesh_Transient(x, y, u_ap, u_ex)
