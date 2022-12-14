@@ -190,6 +190,7 @@ def Advection_Tri(p, pb, tt, f, a, b, t):
     # Output parameters
     #   u_ap        m x 1           Array           Array with the approximation computed by the routine.
     #   u_ex        m x 1           Array           Array with the theoretical solution.
+    #   vec         m x o           Array           Array with the correspondence of the o neighbors of each node.
 
     # Variable initialization
     m    = len(p[:,0])                                                              # The total number of nodes is calculated.
