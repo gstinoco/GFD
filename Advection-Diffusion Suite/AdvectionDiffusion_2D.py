@@ -20,20 +20,22 @@ path.insert(0, 'General/')
 import Gammas
 import Neighbors
 
-def Mesh(x, y, f, nu, t):
+def Mesh(x, y, f, nu, a, b, t):
     # 2D Advection-Diffusion Equation implemented in Logically Rectangular Meshes.
     # 
-    # This routine calculates an approximation to the solution of Diffusion equation in 2D using a Generalized Finite Differences scheme in logically rectangular meshes.
+    # This function calculates an approximation to the solution of Advection-Diffusion equation in 2D using a Generalized Finite Differences scheme in logically rectangular meshes.
     # 
     # The problem to solve is:
     # 
-    # \frac{\partial u}{\partial t}= \nu\nabla^2 u
+    # \frac{\partial u}{\partial t}= \nu\nabla^2 u - a\frac{\partial u}{\partial x} - b\frac{\partial u}{\partial y}
     # 
     # Input parameters
     #   x           m x n           Array           Array with the coordinates in x of the nodes.
     #   y           m x n           Array           Array with the coordinates in y of the nodes.
     #   f                           Function        Function declared with the boundary condition.
     #   nu                          Real            Diffusion coefficient.
+    #   a                           Real            Displacement velocity on x.
+    #   b                           Real            Displacement velocity on y.
     #   t                           Integer         Number of time steps considered.
     # 
     # Output parameters
@@ -52,19 +54,19 @@ def Mesh(x, y, f, nu, t):
     # Boundary conditions
     for k in np.arange(t):
         for i in np.arange(m):                                                      # For each of the nodes on the x boundaries.
-            u_ap[i, 0,   k] = f(x[i, 0], y[i, 0], T[k], nu)                         # The boundary condition is assigned at the first y.
-            u_ap[i, n-1, k] = f(x[i, n-1], y[i, n-1], T[k], nu)                     # The boundary condition is assigned at the last y.
+            u_ap[i, 0,   k] = f(x[i, 0], y[i, 0], T[k], nu, a, b)                   # The boundary condition is assigned at the first y.
+            u_ap[i, n-1, k] = f(x[i, n-1], y[i, n-1], T[k], nu, a, b)               # The boundary condition is assigned at the last y.
         for j in np.arange(n):                                                      # For each of the nodes on the y boundaries.
-            u_ap[0,   j, k] = f(x[0, j], y[0, j], T[k], nu)                         # The boundary condition is assigned at the first x.
-            u_ap[m-1, j, k] = f(x[m-1, j], y[m-1, j], T[k], nu)                     # The boundary condition is assigned at the last x.
+            u_ap[0,   j, k] = f(x[0, j], y[0, j], T[k], nu, a, b)                   # The boundary condition is assigned at the first x.
+            u_ap[m-1, j, k] = f(x[m-1, j], y[m-1, j], T[k], nu, a, b)               # The boundary condition is assigned at the last x.
   
     # Initial condition
     for i in np.arange(m):                                                          # For each of the nodes on x.
         for j in np.arange(n):                                                      # For each of the nodes on y.
-            u_ap[i, j, 0] = f(x[i, j], y[i, j], T[0], nu)                           # The initial condition is assigned.
+            u_ap[i, j, 0] = f(x[i, j], y[i, j], T[0], nu, a, b)                     # The initial condition is assigned.
 
     # Computation of Gamma values
-    L = np.vstack([[0], [0], [2*nu*dt], [0], [2*nu*dt]])                            # The values of the differential operator are assigned.
+    L = np.vstack([[-a*dt], [-b*dt], [2*nu*dt], [0], [2*nu*dt]])                    # The values of the differential operator are assigned.
     Gamma = Gammas.Mesh(x, y, L)                                                    # Gamma computation.
 
     # A Generalized Finite Differences Method
@@ -86,25 +88,27 @@ def Mesh(x, y, f, nu, t):
     for k in np.arange(t):                                                          # For all the time steps.
         for i in np.arange(m):                                                      # For all the nodes on x.
             for j in np.arange(n):                                                  # For all the nodes on y.
-                u_ex[i, j, k] = f(x[i, j], y[i, j], T[k], nu)                       # The theoretical solution is computed.
+                u_ex[i, j, k] = f(x[i, j], y[i, j], T[k], nu, a, b)                 # The theoretical solution is computed.
 
     return u_ap, u_ex
 
-def Mesh_K(x, y, f, nu, t):
+def Mesh_K(x, y, f, nu, a, b, t):
     # 2D Advection-Diffusion implemented in Logically Rectangular Meshes.
     # 
-    # This routine calculates an approximation to the solution of Diffusion equation in 2D using an Explicit Generalized Finite Differences scheme in logically rectangular meshes.
-    # For this routine, a matrix formulation is used compute the approximation.
+    # This function calculates an approximation to the solution of Advection-Diffusion equation in 2D using an Explicit Generalized Finite Differences scheme in logically rectangular meshes.
+    # For this function, a matrix formulation is used compute the approximation.
     # 
     # The problem to solve is:
     # 
-    # \frac{\partial u}{\partial t}= \nu\nabla^2 u
+    # \frac{\partial u}{\partial t}= \nu\nabla^2 u - a\frac{\partial u}{\partial x} - b\frac{\partial u}{\partial y}
     # 
     # Input parameters
     #   x           m x n           Array           Array with the coordinates in x of the nodes.
     #   y           m x n           Array           Array with the coordinates in y of the nodes.
     #   f                           Function        Function declared with the boundary condition.
     #   nu                          Real            Diffusion coefficient.
+    #   a                           Real            Displacement velocity on x.
+    #   b                           Real            Displacement velocity on y.
     #   t                           Integer         Number of time steps considered.
     # 
     # Output parameters
@@ -124,19 +128,19 @@ def Mesh_K(x, y, f, nu, t):
     # Boundary conditions
     for k in np.arange(t):
         for i in np.arange(m):                                                      # For each of the nodes on the x boundaries.
-            u_ap[i, 0,   k] = f(x[i, 0], y[i, 0], T[k], nu)                         # The boundary condition is assigned at the first y.
-            u_ap[i, n-1, k] = f(x[i, n-1], y[i, n-1], T[k], nu)                     # The boundary condition is assigned at the last y.
+            u_ap[i, 0,   k] = f(x[i, 0], y[i, 0], T[k], nu, a, b)                   # The boundary condition is assigned at the first y.
+            u_ap[i, n-1, k] = f(x[i, n-1], y[i, n-1], T[k], nu, a, b)               # The boundary condition is assigned at the last y.
         for j in np.arange(n):                                                      # For each of the nodes on the y boundaries.
-            u_ap[0,   j, k] = f(x[0, j], y[0, j], T[k], nu)                         # The boundary condition is assigned at the first x.
-            u_ap[m-1, j, k] = f(x[m-1, j], y[m-1, j], T[k], nu)                     # The boundary condition is assigned at the last x.
+            u_ap[0,   j, k] = f(x[0, j], y[0, j], T[k], nu, a, b)                   # The boundary condition is assigned at the first x.
+            u_ap[m-1, j, k] = f(x[m-1, j], y[m-1, j], T[k], nu, a, b)               # The boundary condition is assigned at the last x.
   
     # Initial condition
     for i in np.arange(m):                                                          # For each of the nodes on x.
         for j in np.arange(n):                                                      # For each of the nodes on y.
-            u_ap[i, j, 0] = f(x[i, j], y[i, j], T[0], nu)                           # The initial condition is assigned.
+            u_ap[i, j, 0] = f(x[i, j], y[i, j], T[0], nu, a, b)                     # The initial condition is assigned.
 
     # Computation of K with Gammas
-    L  = np.vstack([[0], [0], [2*nu*dt], [0], [2*nu*dt]])                           # The values of the differential operator are assigned.
+    L = np.vstack([[-a*dt], [-b*dt], [2*nu*dt], [0], [2*nu*dt]])                    # The values of the differential operator are assigned.
     K  = Gammas.K(x, y, L)                                                          # K computation that include the Gammas.
     Kp = np.identity(m*n) + K                                                       # Kp with an explicit formulation.
 
@@ -157,18 +161,18 @@ def Mesh_K(x, y, f, nu, t):
     for k in np.arange(t):                                                          # For all the time steps.
         for i in np.arange(m):                                                      # For all the nodes on x.
             for j in np.arange(n):                                                  # For all the nodes on y.
-                u_ex[i, j, k] = f(x[i, j], y[i, j], T[k], nu)                       # The theoretical solution is computed.
+                u_ex[i, j, k] = f(x[i, j], y[i, j], T[k], nu, a, b)                 # The theoretical solution is computed.
 
     return u_ap, u_ex
 
-def Triangulation(p, pb, tt, f, nu, t):
+def Triangulation(p, pb, tt, f, nu, a, b, t):
     # 2D Advection-Diffusion Equation implemented in Triangulations.
     # 
-    # This routine calculates an approximation to the solution of Diffusion equation in 2D using a Generalized Finite Differences scheme in triangulations.
+    # This function calculates an approximation to the solution of Advection-Diffusion equation in 2D using a Generalized Finite Differences scheme in triangulations.
     # 
     # The problem to solve is:
     # 
-    # \frac{\partial u}{\partial t}= \nu\nabla^2 u
+    # \frac{\partial u}{\partial t}= \nu\nabla^2 u - a\frac{\partial u}{\partial x} - b\frac{\partial u}{\partial y}
     # 
     # Input parameters
     #   p           m x 2           Array           Array with the coordinates of the nodes.
@@ -176,6 +180,8 @@ def Triangulation(p, pb, tt, f, nu, t):
     #   tt          n x 3           Array           Array with the correspondence of the n triangles.
     #   f                           Function        Function declared with the boundary condition.
     #   nu                          Real            Diffusion coefficient.
+    #   a                           Real            Displacement velocity on x.
+    #   b                           Real            Displacement velocity on y.
     #   t                           Integer         Number of time steps considered.
     # 
     # Output parameters
@@ -194,17 +200,17 @@ def Triangulation(p, pb, tt, f, nu, t):
     # Boundary conditions
     for k in np.arange(t):
         for i in np.arange(mf):                                                     # For each of the boundary nodes.
-            u_ap[i, k] = f(pb[i, 0], pb[i, 1], T[k], nu)                            # The boundary condition is assigned.
+            u_ap[i, k] = f(pb[i, 0], pb[i, 1], T[k], nu, a, b)                      # The boundary condition is assigned.
   
     # Initial condition
     for i in np.arange(m):                                                          # For each of the nodes.
-        u_ap[i, 0] = f(p[i, 0], p[i, 1], T[0], nu)                                  # The initial condition is assigned.
+        u_ap[i, 0] = f(p[i, 0], p[i, 1], T[0], nu, a, b)                            # The initial condition is assigned.
     
     # Neighbor search for all the nodes.
     vec = Neighbors.Triangulation(p, tt, 9)                                         # Neighbor search with the proper routine.
 
     # Computation of Gamma values
-    L = np.vstack([[0], [0], [2*nu*dt], [0], [2*nu*dt]])                            # The values of the differential operator are assigned.
+    L = np.vstack([[-a*dt], [-b*dt], [2*nu*dt], [0], [2*nu*dt]])                    # The values of the differential operator are assigned.
     Gamma = Gammas.Cloud(p, pb, vec, L)                                             # Gamma computation.
 
     # A Generalized Finite Differences Method
@@ -220,24 +226,26 @@ def Triangulation(p, pb, tt, f, nu, t):
     # Theoretical Solution
     for k in np.arange(t):                                                          # For all the time steps.
         for i in np.arange(m):                                                      # For each of the nodes.
-            u_ex[i,k] = f(p[i,0], p[i,1], T[k], nu)                                 # The theoretical solution is computed.
+            u_ex[i,k] = f(p[i,0], p[i,1], T[k], nu, a ,b)                           # The theoretical solution is computed.
 
     return u_ap, u_ex, vec
 
-def Cloud(p, pb, f, nu, t):
+def Cloud(p, pb, f, nu, a, b, t):
     # 2D Advection-Diffusion Equation implemented in Unstructured Clouds of Points.
     # 
-    # This routine calculates an approximation to the solution of Diffusion equation in 2D using a Generalized Finite Differences scheme on unstructured clouds of points.
+    # This function calculates an approximation to the solution of Advection-Diffusion equation in 2D using a Generalized Finite Differences scheme on unstructured clouds of points.
     # 
     # The problem to solve is:
     # 
-    # \frac{\partial u}{\partial t}= \nu\nabla^2 u
+    # \frac{\partial u}{\partial t}= \nu\nabla^2 u - a\frac{\partial u}{\partial x} - b\frac{\partial u}{\partial y}
     # 
     # Input parameters
     #   p           m x 2           Array           Array with the coordinates of the nodes.
     #   pb          b x 2           Array           Array with the coordinates of the boundary nodes.
     #   f                           Function        Function declared with the boundary condition.
     #   nu                          Real            Diffusion coefficient.
+    #   a                           Real            Displacement velocity on x.
+    #   b                           Real            Displacement velocity on y.
     #   t                           Integer         Number of time steps to be considered.
     # 
     # Output parameters
@@ -256,17 +264,17 @@ def Cloud(p, pb, f, nu, t):
     # Boundary conditions
     for k in np.arange(t):
         for i in np.arange(mf):                                                     # For each of the boundary nodes.
-            u_ap[i, k] = f(pb[i, 0], pb[i, 1], T[k], nu)                            # The boundary condition is assigned.
+            u_ap[i, k] = f(pb[i, 0], pb[i, 1], T[k], nu, a, b)                      # The boundary condition is assigned.
   
     # Initial condition
     for i in np.arange(m):                                                          # For each of the nodes.
-        u_ap[i, 0] = f(p[i, 0], p[i, 1], T[0], nu)                                  # The initial condition is assigned.
+        u_ap[i, 0] = f(p[i, 0], p[i, 1], T[0], nu, a ,b)                            # The initial condition is assigned.
     
     # Neighbor search for all the nodes.
     vec = Neighbors.Cloud(p, pb, 9)                                                 # Neighbor search with the proper routine.
 
     # Computation of Gamma values
-    L = np.vstack([[0], [0], [2*nu*dt], [0], [2*nu*dt]])                            # The values of the differential operator are assigned.
+    L = np.vstack([[-a*dt], [-b*dt], [2*nu*dt], [0], [2*nu*dt]])                    # The values of the differential operator are assigned.
     Gamma = Gammas.Cloud(p, pb, vec, L)                                             # Gamma computation.
 
     # A Generalized Finite Differences Method
@@ -282,6 +290,6 @@ def Cloud(p, pb, f, nu, t):
     # Theoretical Solution
     for k in np.arange(t):                                                          # For all the time steps.
         for i in np.arange(m):                                                      # For each of the nodes.
-            u_ex[i,k] = f(p[i,0], p[i,1], T[k], nu)                                 # The theoretical solution is computed.
+            u_ex[i,k] = f(p[i,0], p[i,1], T[k], nu, a, b)                           # The theoretical solution is computed.
 
     return u_ap, u_ex, vec

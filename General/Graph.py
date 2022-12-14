@@ -99,7 +99,7 @@ def Mesh_Transient(x, y, u_ap, u_ex):
     ax2.set_zlim([min, max])
     ax2.set_title('Theoretical Solution')
 
-    plt.show()
+    plt.pause(0.1)
 
 def Cloud_Transient(p, tt, u_ap, u_ex):
     if tt.min() == 1:
@@ -141,7 +141,7 @@ def Cloud_Transient(p, tt, u_ap, u_ex):
     ax2.set_zlim([min, max])
     ax2.set_title('Theoretical Solution')
 
-    plt.show()
+    plt.pause(0.1)
         
 def Cloud_Transient_Vid(p, tt, u_ap, u_ex, nam):
     if tt.min() == 1:
