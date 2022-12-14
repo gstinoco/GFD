@@ -19,7 +19,7 @@ from sys import path
 path.insert(0, 'General/')
 import Gammas
 
-def Diffusion_Mesh_K(x, y, f, nu, t, lam):
+def Mesh_K(x, y, f, nu, t, lam):
     # 2D Diffusion implemented in Logically Rectangular Meshes.
     # 
     # This routine calculates an approximation to the solution of Diffusion equation in 2D using an Implicit Generalized Finite Differences scheme in logically rectangular meshes.

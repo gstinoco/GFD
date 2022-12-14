@@ -20,7 +20,7 @@ path.insert(0, 'General/')
 import Gammas
 import Neighbors
 
-def Poisson_Mesh(x, y, phi, f):
+def Mesh(x, y, phi, f):
     # 2D Poisson Equation implemented in Logically Rectangular Meshes.
     # 
     # This routine calculates an approximation to the solution of Poisson's equation in 2D using a Generalized Finite Differences scheme in logically rectangular meshes.
@@ -84,7 +84,7 @@ def Poisson_Mesh(x, y, phi, f):
     
     return u_ap, u_ex
 
-def Poisson_Tri(p, pb, tt, phi, f):
+def Triangulation(p, pb, tt, phi, f):
     # 2D Poisson Equation implemented in Triangulations.
     # 
     # This routine calculates an approximation to the solution of Poisson's equation in 2D using a Generalized Finite Differences scheme in triangulations.
@@ -142,7 +142,7 @@ def Poisson_Tri(p, pb, tt, phi, f):
 
     return u_ap, u_ex, vec
 
-def Poisson_Cloud(p, pb, phi, f):
+def Cloud(p, pb, phi, f):
     # 2D Poisson Equation implemented in unstructured clouds of points.
     # 
     # This routine calculates an approximation to the solution of Poisson's equation in 2D using a Generalized Finite Differences scheme in unstructured clouds of points.

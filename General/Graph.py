@@ -99,7 +99,7 @@ def Mesh_Transient(x, y, u_ap, u_ex):
     ax2.set_zlim([min, max])
     ax2.set_title('Theoretical Solution')
 
-    plt.draw()
+    plt.show()
 
 def Cloud_Transient(p, tt, u_ap, u_ex):
     if tt.min() == 1:
@@ -141,7 +141,7 @@ def Cloud_Transient(p, tt, u_ap, u_ex):
     ax2.set_zlim([min, max])
     ax2.set_title('Theoretical Solution')
 
-    plt.draw()
+    plt.show()
         
 def Cloud_Transient_Vid(p, tt, u_ap, u_ex, nam):
     if tt.min() == 1:
@@ -198,8 +198,15 @@ def Cloud_Transient_Vid(p, tt, u_ap, u_ex, nam):
 def Error(er):
     t = len(er)
     T = np.linspace(0,1,t)
-    plt.plot(T, er)
-    plt.ylabel('Error')
-    plt.xlabel('Time step')
-    plt.title('Quadratic Mean Error')
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
+
+    ax1.plot(T, er)
+    ax1.set_title('Linear')
+    ax1.set(xlabel='Time Step', ylabel='Error')
+
+    ax2.semilogy(T, er)
+    ax2.set_title('Logarithmic')
+    ax2.set(xlabel='Time Step', ylabel='Error')
+
+    plt.suptitle('Quadratic Mean Error')
     plt.show()

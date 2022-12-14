@@ -20,7 +20,7 @@ path.insert(0, 'General/')
 import Gammas
 import Neighbors
 
-def Advection_Mesh(x, y, f, a, b, t):
+def Mesh(x, y, f, a, b, t):
     # 2D Advection Equation implemented in Logically Rectangular Meshes.
     # 
     # This routine calculates an approximation to the solution of Advection equation in 2D using a Generalized Finite Differences scheme in logically rectangular meshes.
@@ -93,7 +93,7 @@ def Advection_Mesh(x, y, f, a, b, t):
 
     return u_ap, u_ex
 
-def Advection_Mesh_K(x, y, f, a, b, t):
+def Mesh_K(x, y, f, a, b, t):
     # 2D Advection implemented in Logically Rectangular Meshes.
     # 
     # This routine calculates an approximation to the solution of Advection equation in 2D using an Explicit Generalized Finite Differences scheme in logically rectangular meshes.
@@ -167,7 +167,7 @@ def Advection_Mesh_K(x, y, f, a, b, t):
 
     return u_ap, u_ex
 
-def Advection_Tri(p, pb, tt, f, a, b, t):
+def Triangulation(p, pb, tt, f, a, b, t):
     # 2D Advection Equation implemented in Triangulations.
     # 
     # This routine calculates an approximation to the solution of advection equation in 2D using a Generalized Finite Differences scheme in triangulations.
@@ -233,7 +233,7 @@ def Advection_Tri(p, pb, tt, f, a, b, t):
 
     return u_ap, u_ex, vec
 
-def Advection_Cloud(p, pb, f, a, b, t):
+def Cloud(p, pb, f, a, b, t):
     # 2D Advection Equation implemented in Unstructured Clouds of Points.
     # 
     # This routine calculates an approximation to the solution of Advection equation in 2D using a Generalized Finite Differences scheme on unstructured clouds of points.

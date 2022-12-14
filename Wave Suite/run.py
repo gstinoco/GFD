@@ -65,28 +65,28 @@ def gWAV(x, y, t, c):
     return fun
 
 # Wave Equation in 2D computed on triangulations.
-u_ap, u_ex, vec = Wave_2D.Wave_Tri(p, pb, tt, fWAV, gWAV, t, c)
+u_ap, u_ex, vec = Wave_2D.Triangulation(p, pb, tt, fWAV, gWAV, t, c)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
 print('The maximum mean square error in the triangulation with the explicit scheme is: ', er.max())
 Graph.Error(er)
 Graph.Cloud_Transient(p, tt, u_ap, u_ex)
 
 # Wave Equation in 2D computed on a unstructured cloud of points.
-u_ap, u_ex, vec = Wave_2D.Wave_Cloud(p, pb, fWAV, gWAV, t, c)
+u_ap, u_ex, vec = Wave_2D.Cloud(p, pb, fWAV, gWAV, t, c)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
 print('The maximum mean square error in the unstructured cloud of points with the explicit scheme is: ', er.max())
 Graph.Error(er)
 Graph.Cloud_Transient(p, tt, u_ap, u_ex)
 
 # Wave Equation in 2D computed with an implicit algorithm on triangulations.
-u_ap, u_ex, vec = Wave_2D_Implicit.Wave_Tri(p, pb, tt, fWAV, gWAV, t, c, lam)
+u_ap, u_ex, vec = Wave_2D_Implicit.Triangulation(p, pb, tt, fWAV, gWAV, t, c, lam)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
 print('The maximum mean square error in the triangulation with the implicit scheme is: ', er.max())
 Graph.Error(er)
 Graph.Cloud_Transient(p, tt, u_ap, u_ex)
 
 # Wave Equation in 2D computed with an implicit algorithm on a unstructured cloud of points.
-u_ap, u_ex, vec = Wave_2D_Implicit.Wave_Cloud(p, pb, fWAV, gWAV, t, c, lam)
+u_ap, u_ex, vec = Wave_2D_Implicit.Cloud(p, pb, fWAV, gWAV, t, c, lam)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
 print('The maximum mean square error in the unstructured cloud of points with the implicit scheme is: ', er.max())
 Graph.Error(er)

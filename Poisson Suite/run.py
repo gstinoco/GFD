@@ -63,19 +63,19 @@ def f(x,y):
     return fun
 
 # Poisson 2D computed in a logically rectangular mesh
-phi_ap, phi_ex = Poisson_2D.Poisson_Mesh(x, y, phi, f)
+phi_ap, phi_ex = Poisson_2D.Mesh(x, y, phi, f)
 er = Errors.Mesh_Static(x, y, phi_ap, phi_ex)
 print('The mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er)
 Graph.Mesh_Static(x, y, phi_ap, phi_ex)
 
 # Poisson 2D computed in a triangulation
-phi_ap, phi_ex, vec = Poisson_2D.Poisson_Tri(p, pb, tt, phi, f)
+phi_ap, phi_ex, vec = Poisson_2D.Triangulation(p, pb, tt, phi, f)
 er = Errors.Cloud_Static(p, vec, phi_ap, phi_ex)
 print('The mean square error in the triangulation', region, 'with size', cloud, 'is: ', er)
 Graph.Cloud_Static(p, tt, phi_ap, phi_ex)
 
 # Poisson 2D computed in an unstructured cloud of points
-phi_ap, phi_ex, vec = Poisson_2D.Poisson_Cloud(p, pb, phi, f)
+phi_ap, phi_ex, vec = Poisson_2D.Cloud(p, pb, phi, f)
 er = Errors.Cloud_Static(p, vec, phi_ap, phi_ex)
 print('The mean square error in the unstructured cloud of points', region, 'with size', cloud, 'is: ', er)
 Graph.Cloud_Static(p, tt, phi_ap, phi_ex)

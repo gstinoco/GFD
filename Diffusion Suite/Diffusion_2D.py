@@ -20,7 +20,7 @@ path.insert(0, 'General/')
 import Gammas
 import Neighbors
 
-def Diffusion_Mesh(x, y, f, nu, t):
+def Mesh(x, y, f, nu, t):
     # 2D Diffusion Equation implemented in Logically Rectangular Meshes.
     # 
     # This routine calculates an approximation to the solution of Diffusion equation in 2D using a Generalized Finite Differences scheme in logically rectangular meshes.
@@ -90,7 +90,7 @@ def Diffusion_Mesh(x, y, f, nu, t):
 
     return u_ap, u_ex
 
-def Diffusion_Mesh_K(x, y, f, nu, t):
+def Mesh_K(x, y, f, nu, t):
     # 2D Diffusion implemented in Logically Rectangular Meshes.
     # 
     # This routine calculates an approximation to the solution of Diffusion equation in 2D using an Explicit Generalized Finite Differences scheme in logically rectangular meshes.
@@ -161,7 +161,7 @@ def Diffusion_Mesh_K(x, y, f, nu, t):
 
     return u_ap, u_ex
 
-def Diffusion_Tri(p, pb, tt, f, nu, t):
+def Triangulation(p, pb, tt, f, nu, t):
     # 2D Diffusion Equation implemented in Triangulations.
     # 
     # This routine calculates an approximation to the solution of Diffusion equation in 2D using a Generalized Finite Differences scheme in triangulations.
@@ -224,7 +224,7 @@ def Diffusion_Tri(p, pb, tt, f, nu, t):
 
     return u_ap, u_ex, vec
 
-def Diffusion_Cloud(p, pb, f, nu, t):
+def Cloud(p, pb, f, nu, t):
     # 2D Diffusion Equation implemented in Unstructured Clouds of Points.
     # 
     # This routine calculates an approximation to the solution of Diffusion equation in 2D using a Generalized Finite Differences scheme on unstructured clouds of points.

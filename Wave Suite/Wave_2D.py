@@ -20,7 +20,7 @@ path.insert(0, 'General/')
 import Gammas
 import Neighbors
 
-def Wave_Tri(p, pb, tt, f, g, t, c):
+def Triangulation(p, pb, tt, f, g, t, c):
     # Wave Equation 2D implemented on Triangulations
     # 
     # This routine calculates an approximation to the solution of wave equation in 2D using a Generalized Finite Differences scheme on triangulations.
@@ -100,7 +100,7 @@ def Wave_Tri(p, pb, tt, f, g, t, c):
 
     return u_ap, u_ex, vec
 
-def Wave_Cloud(p, pb, f, g, t, c):
+def Cloud(p, pb, f, g, t, c):
     # Wave Equation 2D implemented on Unstructured Clouds of Points
     # 
     # This routine calculates an approximation to the solution of wave equation in 2D using a Generalized Finite Differences scheme on unstructured clouds of points.
