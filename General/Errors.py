@@ -12,7 +12,7 @@
 #   November, 2022.
 #
 # Last Modification:
-#   November, 2022.
+#   December, 2022.
 
 # Routines to calculate the mean square error for the Generalized Finite Difference methods. 2 ways are proposed to calculate the error:
 # 

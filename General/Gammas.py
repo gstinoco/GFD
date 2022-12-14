@@ -12,7 +12,7 @@
 #   November, 2022.
 #
 # Last Modification:
-#   November, 2022.
+#   December, 2022.
 
 ## Cálculo de Gammas para diferentes códigos
 # En este archivo se definen diferentes funciones para el cálculo de Gammas, el cálculo de Gammas se define para los siguientes casos:

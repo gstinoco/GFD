@@ -12,7 +12,7 @@
 #   November, 2022.
 #
 # Last Modification:
-#   November, 2022.
+#   December, 2022.
 
 import numpy as np
 from sys import path
@@ -41,7 +41,7 @@ def Advection_Mesh(x, y, f, a, b, t):
     #   u_ap        m x n x t       Array           Array with the approximation computed by the routine.
     #   u_ex        m x n x t       Array           Array with the theoretical solution.
 
-    # Variable initizalization
+    # Variable initialization
     me   = x.shape                                                                  # The size of the mesh is found.
     m    = me[0]                                                                    # The number of nodes in x.
     n    = me[1]                                                                    # The number of nodes in y.
@@ -113,7 +113,7 @@ def Advection_Mesh_K(x, y, f, a, b, t):
     #   u_ap        m x n x t       Array           Array with the approximation computed by the routine.
     #   u_ex        m x n x t       Array           Array with the theoretical solution.
 
-    # Variable initizalization
+    # Variable initialization
     me   = x.shape                                                                  # The size of the mesh is found.
     m    = me[0]                                                                    # The number of nodes in x.
     n    = me[1]                                                                    # The number of nodes in y.
@@ -185,7 +185,7 @@ def Advection_Tri(p, pb, tt, f, a, b, t):
     #   u_ap        m x 1           Array           Array with the approximation computed by the routine.
     #   u_ex        m x 1           Array           Array with the theoretical solution.
 
-    # Variable initizalization
+    # Variable initialization
     m    = len(p[:,0])                                                              # The total number of nodes is calculated.
     mf   = len(pb[:,0])                                                             # The number of boundary nodes is calculated.
     T    = np.linspace(0,1,t)                                                       # Time discretization.
@@ -203,7 +203,7 @@ def Advection_Tri(p, pb, tt, f, a, b, t):
         u_ap[i, 0] = f(p[i, 0], p[i, 1], T[0], a, b)                                # The initial condition is assigned.
     
     # Neighbor search for all the nodes.
-    vec = Neighbors.Neighbors_Adv(p, tt, 9)                                         # Neighbor search with the proper routine.
+    vec = Neighbors.Triangulation(p, tt, 9)                                         # Neighbor search with the proper routine.
 
     # Computation of Gamma values
     L = np.vstack([[-a*dt], [-b*dt], [0], [0], [0]])                                # The values of the differential operator are assigned.
@@ -213,9 +213,9 @@ def Advection_Tri(p, pb, tt, f, a, b, t):
     for k in np.arange(1,t):                                                        # For each of the time steps.
         for i in np.arange(mf, m):                                                  # For each of the interior nodes.
             utemp = 0                                                               # utemp initialization in 0.
-            nvec = sum(vec[i,:] != 0)                                               # Number of neighbor nodes of the central node.
+            nvec = sum(vec[i,:] != -1)                                              # Number of neighbor nodes of the central node.
             for j in np.arange(1,nvec+1):                                           # For each of the neighbor nodes.
-                utemp = utemp + Gamma[i,j]*u_ap[int(vec[i, j-1])-1, k-1]            # utemp computation with the neighbors.
+                utemp = utemp + Gamma[i,j]*u_ap[int(vec[i, j-1]), k-1]              # utemp computation with the neighbors.
             utemp = utemp + Gamma[i,0]*u_ap[i, k-1]                                 # The central node is added to the approximation.
             u_ap[i,k] = u_ap[i, k-1] + utemp                                        # u_ap value is assigned.
 
@@ -226,7 +226,7 @@ def Advection_Tri(p, pb, tt, f, a, b, t):
 
     return u_ap, u_ex, vec
 
-def Advection_Cloud(p, pb, vec, f, a, b, t):
+def Advection_Cloud(p, pb, f, a, b, t):
     # 2D Advection Equation implemented in Unstructured Clouds of Points.
     # 
     # This routine calculates an approximation to the solution of Advection equation in 2D using a Generalized Finite Differences scheme on unstructured clouds of points.
@@ -238,7 +238,6 @@ def Advection_Cloud(p, pb, vec, f, a, b, t):
     # Input parameters
     #   p           m x 2           Array           Array with the coordinates of the nodes.
     #   pb          b x 2           Array           Array with the coordinates of the boundary nodes.
-    #   vec         m x o           Array           Array with the correspondence of the o neighbors of each node.
     #   f                           Function        Function declared with the boundary condition.
     #   a                           Real            Displacement velocity on x.
     #   b                           Real            Displacement velocity on y.
@@ -247,8 +246,9 @@ def Advection_Cloud(p, pb, vec, f, a, b, t):
     # Output parameters
     #   u_ap        m x 1           Array           Array with the approximation computed by the routine.
     #   u_ex        m x 1           Array           Array with the theoretical solution.
+    #   vec         m x o           Array           Array with the correspondence of the o neighbors of each node.
 
-    # Variable initizalization
+    # Variable initialization
     m    = len(p[:,0])                                                              # The total number of nodes is calculated.
     mf   = len(pb[:,0])                                                             # The number of boundary nodes is calculated.
     T    = np.linspace(0,1,t)                                                       # Time discretization.
@@ -265,6 +265,9 @@ def Advection_Cloud(p, pb, vec, f, a, b, t):
     for i in np.arange(m):                                                          # For each of the nodes.
         u_ap[i, 0] = f(p[i, 0], p[i, 1], T[0], a, b)                                # The initial condition is assigned.
 
+    # Neighbor search for all the nodes.
+    vec = Neighbors.Cloud(p, pb, 9)                                                 # Neighbor search with the proper routine.
+    
     # Computation of Gamma values
     L = np.vstack([[-a*dt], [-b*dt], [0], [0], [0]])                                # The values of the differential operator are assigned.
     Gamma = Gammas.Cloud(p, pb, vec, L)                                             # Gamma computation.
@@ -273,9 +276,9 @@ def Advection_Cloud(p, pb, vec, f, a, b, t):
     for k in np.arange(1,t):                                                        # For each of the time steps.
         for i in np.arange(mf, m):                                                  # For each of the interior nodes.
             utemp = 0                                                               # utemp initialization in 0.
-            nvec = sum(vec[i,:] != 0)                                               # Number of neighbor nodes of the central node.
+            nvec = sum(vec[i,:] != -1)                                              # Number of neighbor nodes of the central node.
             for j in np.arange(1,nvec+1):                                           # For each of the neighbor nodes.
-                utemp = utemp + Gamma[i,j]*u_ap[int(vec[i, j-1])-1, k-1]            # utemp computation with the neighbors.
+                utemp = utemp + Gamma[i,j]*u_ap[int(vec[i, j-1]), k-1]              # utemp computation with the neighbors.
             utemp = utemp + Gamma[i,0]*u_ap[i, k-1]                                 # The central node is added to the approximation.
             u_ap[i,k] = u_ap[i, k-1] + utemp                                        # u_ap value is assigned.
 

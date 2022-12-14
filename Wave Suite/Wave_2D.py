@@ -12,7 +12,7 @@
 #   November, 2022.
 #
 # Last Modification:
-#   November, 2022.
+#   December, 2022.
 
 import numpy as np
 from sys import path
@@ -41,6 +41,7 @@ def Wave_Tri(p, pb, tt, f, g, t, c):
     # Output parameters
     #   u_ap        m x n x t       Array           Array with the approximation computed by the routine.
     #   u_ex        m x n x t       Array           Array with the theoretical solution.
+    #   vec         m x o           Array           Array with the correspondence of the o neighbors of each node.
 
     # Variable initialization
     m    = len(p[:,0])                                                              # The total number of nodes is calculated.
@@ -119,6 +120,7 @@ def Wave_Cloud(p, pb, f, g, t, c):
     # Output parameters
     #   u_ap        m x n x t       Array           Array with the approximation computed by the routine.
     #   u_ex        m x n x t       Array           Array with the theoretical solution.
+    #   vec         m x o           Array           Array with the correspondence of the o neighbors of each node.
 
     # Variable initialization
     m    = len(p[:,0])                                                              # The total number of nodes is calculated.

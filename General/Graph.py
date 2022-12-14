@@ -12,7 +12,7 @@
 #   November, 2022.
 #
 # Last Modification:
-#   November, 2022.
+#   December, 2022.
 
 # Graficadores
 # Aquí se definen los diferentes graficadores que se utilizarán en los diferentes códigos de Python con la finalidad de no tener que definirlos en cada código por separado.

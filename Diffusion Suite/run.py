@@ -24,18 +24,15 @@ import Diffusion_2D
 import Diffusion_2D_Implicit
 
 # Region data is loaded.
-# Triangulation and unstructured cloud of points to work in.
-nube = 'CAB_1'
-# This region can be changed for any other triangulation or unstructured cloud of points on Regions/Clouds/ or with any other region with the same file data structure.
-
-# Number of Time Steps
-t   = 2000
-
-# Diffusion coefficient
-nu = 0.2
+# Triangulation or unstructured cloud of points to work in.
+region = 'CAB'
+cloud = '1'
+# Mesh size to work in.
+mesh = '21'
+# This region can be changed for any other triangulation, unstructured cloud of points or mesh on Regions/ or with any other region with the same file data structure.
 
 # All data is loaded from the file
-mat = loadmat('Regions/Clouds/' + nube + '.mat')
+mat = loadmat('Regions/Clouds/' + region + '_' + cloud + '.mat')
 
 # Node data is saved
 p   = mat['p']
@@ -45,16 +42,18 @@ tt  = mat['t']
 if tt.min() == 1:
     tt -= 1
 
-# Mesh to work in.
-malla = 'CAB21'
-# This region can be changed for any other mesh on Regions/Meshes/ or with any other region with the same file data structure.
-
 # All data is loaded from the file
-mat = loadmat('Regions/Meshes/' + malla + '.mat')
+mat = loadmat('Regions/Meshes/' + region + mesh + '.mat')
 
 # Node data is saved
 x  = mat['x']
 y  = mat['y']
+
+# Number of Time Steps
+t   = 2000
+
+# Diffusion coefficient
+nu = 0.2
 
 # Boundary conditions
 # The boundary conditions are defined as
@@ -67,34 +66,34 @@ def fDIF(x, y, t, v):
 # Diffusion 2D computed in a logically rectangular mesh
 u_ap, u_ex = Diffusion_2D.Diffusion_Mesh(x, y, fDIF, nu, t)
 er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
-print('The maximum mean square error in the mesh', malla, 'is: ', er.max())
-#Graph.Error(er)
-#Graph.Mesh_Transient(x, y, u_ap, u_ex)
+print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
+Graph.Error(er)
+Graph.Mesh_Transient(x, y, u_ap, u_ex)
 
 # Diffusion 2D computed in a triangulation
 u_ap, u_ex, vec = Diffusion_2D.Diffusion_Tri(p, pb, tt, fDIF, nu, t)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the triangulation', nube, 'is: ', er.max())
-#Graph.Error(er)
-#Graph.Cloud_Transient(p, tt, u_ap, u_ex)
+print('The maximum mean square error in the triangulation', region, 'with size', cloud, 'is: ', er.max())
+Graph.Error(er)
+Graph.Cloud_Transient(p, tt, u_ap, u_ex)
 
 # Diffusion 2D computed in an unstructured cloud of points
 u_ap, u_ex, vec = Diffusion_2D.Diffusion_Cloud(p, pb, fDIF, nu, t)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the unstructured cloud of points', nube, 'is: ', er.max())
-#Graph.Error(er)
-#Graph.Cloud_Transient(p, tt, u_ap, u_ex)
+print('The maximum mean square error in the unstructured cloud of points', region, 'with size', cloud, 'is: ', er.max())
+Graph.Error(er)
+Graph.Cloud_Transient(p, tt, u_ap, u_ex)
 
 # Diffusion 2D computed in a logically rectangular mesh with Matrix Formulation
 u_ap, u_ex = Diffusion_2D.Diffusion_Mesh_K(x, y, fDIF, nu, t)
 er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
-print('The maximum mean square error in the mesh', malla, 'is: ', er.max())
-#Graph.Error(er)
-#Graph.Mesh_Transient(x, y, u_ap, u_ex)
+print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
+Graph.Error(er)
+Graph.Mesh_Transient(x, y, u_ap, u_ex)
 
 # Diffusion 2D computed in a logically rectangular mesh with an implicit scheme with Matrix Formulation
 u_ap, u_ex = Diffusion_2D_Implicit.Diffusion_Mesh_K(x, y, fDIF, nu, t, 0)
 er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
-print('The maximum mean square error in the mesh', malla, 'is: ', er.max())
-#Graph.Error(er)
-#Graph.Mesh_Transient(x, y, u_ap, u_ex)
+print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
+Graph.Error(er)
+Graph.Mesh_Transient(x, y, u_ap, u_ex)
