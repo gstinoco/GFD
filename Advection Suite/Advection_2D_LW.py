@@ -275,7 +275,7 @@ def Advection_Cloud(p, pb, f, a, b, t):
         u_ap[i, 0] = f(p[i, 0], p[i, 1], T[0], a, b)                                # The initial condition is assigned.
 
     # Neighbor search for all the nodes.
-    vec = Neighbors.Cloud(p, pb, 9)                                                 # Neighbor search with the proper routine.
+    vec = Neighbors.Cloud_Adv(p, pb, 9, a, b)                                       # Neighbor search with the proper routine.
     
     # Computation of Gamma values
     L = np.vstack([[-a*dt], [-b*dt], [(a*dt)**2], [a*b*dt**2], [(b*dt)**2]])        # The values of the differential operator are assigned.

@@ -69,29 +69,29 @@ print('###################################### PURE ADVECTION ###################
 u_ap, u_ex = Advection_2D.Advection_Mesh(x, y, fCAB, a, b, t)
 er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
 print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
-#Graph.Error(er)
-#Graph.Mesh_Transient(x, y, u_ap, u_ex)
+Graph.Error(er)
+Graph.Mesh_Transient(x, y, u_ap, u_ex)
 
 # Advection 2D computed in a triangulation
 u_ap, u_ex, vec = Advection_2D.Advection_Tri(p, pb, tt, fCAB, a, b, t)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
 print('The maximum mean square error in the triangulation', region, 'with size', cloud, 'is: ', er.max())
-#Graph.Error(er)
-#Graph.Cloud_Transient(p, u_ap, u_ex)
+Graph.Error(er)
+Graph.Cloud_Transient(p, u_ap, u_ex)
 
 # Advection 2D computed in an unstructured cloud of points
 u_ap, u_ex, vec = Advection_2D.Advection_Cloud(p, pb, fCAB, a, b, t)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
 print('The maximum mean square error in the unstructured cloud of points', region, 'with size', cloud, 'is: ', er.max())
-#Graph.Error(er)
-#Graph.Cloud_Transient(p, u_ap, u_ex)
+Graph.Error(er)
+Graph.Cloud_Transient(p, u_ap, u_ex)
 
 # Advection 2D computed in a logically rectangular mesh with Matrix Formulation
 u_ap, u_ex = Advection_2D.Advection_Mesh_K(x, y, fCAB, a, b, t)
 er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
 print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
-#Graph.Error(er)
-#Graph.Mesh_Transient(x, y, u_ap, u_ex)
+Graph.Error(er)
+Graph.Mesh_Transient(x, y, u_ap, u_ex)
 
 print('####################################### LAX-WENDROFF #######################################')
 
@@ -99,26 +99,26 @@ print('####################################### LAX-WENDROFF ####################
 u_ap, u_ex = Advection_2D_LW.Advection_Mesh(x, y, fCAB, a, b, t)
 er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
 print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
-#Graph.Error(er)
-#Graph.Mesh_Transient(x, y, u_ap, u_ex)
+Graph.Error(er)
+Graph.Mesh_Transient(x, y, u_ap, u_ex)
 
 # Advection 2D computed in a triangulation
 u_ap, u_ex, vec = Advection_2D_LW.Advection_Tri(p, pb, tt, fCAB, a, b, t)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
 print('The maximum mean square error in the triangulation', region, 'with size', cloud, 'is: ', er.max())
-#Graph.Error(er)
-#Graph.Cloud_Transient(p, u_ap, u_ex)
+Graph.Error(er)
+Graph.Cloud_Transient(p, u_ap, u_ex)
 
 # Advection 2D computed in an unstructured cloud of points
 u_ap, u_ex, vec = Advection_2D_LW.Advection_Cloud(p, pb, fCAB, a, b, t)
 er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
 print('The maximum mean square error in the unstructured cloud of points', region, 'with size', cloud, 'is: ', er.max())
-#Graph.Error(er)
-#Graph.Cloud_Transient(p, u_ap, u_ex)
+Graph.Error(er)
+Graph.Cloud_Transient(p, u_ap, u_ex)
 
 # Advection 2D computed in a logically rectangular mesh with Matrix Formulation
 u_ap, u_ex = Advection_2D_LW.Advection_Mesh_K(x, y, fCAB, a, b, t)
 er = Errors.Mesh_Transient(x, y, u_ap, u_ex)
 print('The maximum mean square error in the mesh', region, 'with', mesh, 'points per side is: ', er.max())
-#Graph.Error(er)
-#Graph.Mesh_Transient(x, y, u_ap, u_ex)
+Graph.Error(er)
+Graph.Mesh_Transient(x, y, u_ap, u_ex)
