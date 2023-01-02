@@ -52,8 +52,8 @@ All the codes presented were developed by:
 
 With the financing of:
 
-  National Council of Science and Technology, CONACyT (Consejo Nacional de Ciencia y Tecnología, CONACyT), México.
+  - National Council of Science and Technology, CONACyT (Consejo Nacional de Ciencia y Tecnología, CONACyT), México.
   
-  Coordination of Scientific Research, CIC-UMSNH (Coordinación de la Investigación Científica de la Universidad Michoacana de San Nicolás de Hidalgo, CIC-UMSNH), México.
+  - Coordination of Scientific Research, CIC-UMSNH (Coordinación de la Investigación Científica de la Universidad Michoacana de San Nicolás de Hidalgo, CIC-UMSNH), México.
   
-  Aula CIMNE Morelia, México.
+  - Aula CIMNE Morelia, México.
