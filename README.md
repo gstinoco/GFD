@@ -2,9 +2,9 @@
 Generalized Finite Differences Methods for numerically solve different Partial Differential Equations
 
 More details on the Methods presented in these codes can be found in the following publications:
-  - An application of generalized differences to unsteady heat problems subject to mixed boundary conditions
-      F. J. Domínguez-Mota, J. G. Tinoco-Ruiz, F. O. Guillén-Reyes, G. Tinoco-Guerrero, and A. Valencia-Ramírez
-      Pan-American Congress on Computational Mechanics At Barcelona, Spain. Vol 1. 2015.
+  - An application of generalized differences to unsteady heat problems subject to mixed boundary conditions<br>
+      F. J. Domínguez-Mota, J. G. Tinoco-Ruiz, F. O. Guillén-Reyes, G. Tinoco-Guerrero, and A. Valencia-Ramírez<br>
+      Pan-American Congress on Computational Mechanics At Barcelona, Spain. Vol 1. 2015.<br>
       http://dx.doi.org/10.13140/RG.2.1.2395.5922
 
   - Solución numérica de la ecuación de advección empleando mallas estructuradas sobre regiones planas irregulares utilizando un esquema de diferencias finitas (thesis)
