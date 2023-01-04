@@ -1,6 +1,22 @@
 # GFD Code pack
 Generalized Finite Differences Methods for numerically solve different Partial Differential Equations
 
+## Researchers
+All the codes presented were developed by:
+    
+  - Dr. Gerardo Tinoco Guerrero<br>
+    Universidad Michoacana de San Nicolás de Hidalgo<br>
+    Aula CIMNE<br>
+    gerardo.tinoco@umich.mx
+
+  - Dr. Francisco Javier Domínguez Mota<br>
+    Universidad Michoacana de San Nicolás de Hidalgo<br>
+    Aula CIMNE
+
+  - Dr. José Alberto Guzmán Torres<br>
+    Universidad Michoacana de San Nicolás de Hidalgo<br>
+    Aula CIMNE
+
 ## References
 More details on the Methods presented in these codes can be found in the following publications:
   - An application of generalized differences to unsteady heat problems subject to mixed boundary conditions<br>
@@ -38,26 +54,10 @@ More details on the Methods presented in these codes can be found in the followi
       Meeting on Applied Scientific Computing and Tools At: El Escorial, Spain. Vol. 13, 2013.<br>
       http://dx.doi.org/10.13140/RG.2.1.1400.4567
 
-    - Numerical Solution of Differential Equations in Irregular Plane Regions Using Quality Structured Convex Grids<br>
+  - Numerical Solution of Differential Equations in Irregular Plane Regions Using Quality Structured Convex Grids<br>
       F. J. Domínguez-Mota, P. Fernández-Valdez, S. Mendoza-Armenta, G. Tinoco-Guerrero, and J. G. Tinoco-Ruiz<br>
       International Journal of Modeling, Simulation, and Scientific Computing, Vol. 4 (2), 2013.<br>
       http://dx.doi.org/10.1142/S1793962313500049
-
-## Researchers
-All the codes presented were developed by:
-    
-  - Dr. Gerardo Tinoco Guerrero<br>
-    Universidad Michoacana de San Nicolás de Hidalgo<br>
-    Aula CIMNE<br>
-    gerardo.tinoco@umich.mx
-
-  - Dr. Francisco Javier Domínguez Mota<br>
-    Universidad Michoacana de San Nicolás de Hidalgo<br>
-    Aula CIMNE
-
-  - Dr. José Alberto Guzmán Torres<br>
-    Universidad Michoacana de San Nicolás de Hidalgo<br>
-    Aula CIMNE
 
 ## Funding
 With the financing of:
