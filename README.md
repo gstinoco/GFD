@@ -19,6 +19,51 @@ All the codes presented were developed by:
 
 ## References
 More details on the Methods presented in these codes can be found in the following publications:
+  - Numerical solution of density-driven groundwater flows using a generalized finite difference method defined by an unweighted least-squares problem<br>
+      R. Román-Gutiérrez, C. Chávez-Negrete, F. J. Domínguez-Mota, J. A. Guzmán-Torres, and G. Tinoco-Guerrero<br>
+      Frontiers in Applied Mathematics and Statistics, 8:976958, 2022.<br>
+      https://doi.org/10.3389/fams.2022.976958
+      
+  - Numerical Solution of Diffusion Equation using a Method of Lines and Generalized Finite Differences<br>
+      G. Tinoco-Guerrero, F. J. Domínguez-Mota, J. A. Guzmán-Torres, and J. G. Tinoco-Ruiz<br>
+      Revista Internacional de Métodos Numéricos para Cálculo y Diseño en Ingeniería, Vol. 38 (2), 2022.<br>
+      http://dx.doi.org/10.23967/j.rimni.2022.06.003
+
+  - A Generalized Finite-Differences Scheme used in Modeling of a Direct and a Inverse Problem of Advection-Diffusion<br>
+      F. J. Domínguez-Mota, J. S. Lucas-Martínez, and G. Tinoco-Guerrero<br>
+      International Journal of Applied Mathematics. Vol 33 (4), 2020.<br>
+      http://dx.doi.org/10.12732/ijam.v33i4.5
+
+  - Métodos Híbridos Aplicados a Modelos de Contaminantes Gobernados por Ecuaciones Diferenciales Parciales no Lineales (thesis)<br>
+      G. Tinoco-Guerrero<br>
+      Universidad Michoacana de San Nicolás de Hidalgo<br>
+      http://dx.doi.org/10.13140/RG.2.2.26334.46404
+
+  - A Generalized Finite Difference-Volume Hybrid Method Applied to Shallow-Water Equations<br>
+      G. Tinoco-Guerrero, F. J. Domínguez-Mota, J. G. Tinoco-Ruiz, J. S. Lucas-Martínez, N. S. Tinoco-Guerrero, Matti Leppäranta, and Ivan Mammarella<br>
+      Revista Mexicana de Métodos Numéricos. Vol. 4 (2). 2020.<br>
+      https://www.scipedia.com/public/Tinoco_Guerrero_et_al_2020a
+
+  - A study of the stability for a generalized finite-difference scheme applied to the advection-diffusion equation<br>
+      G. Tinoco-Guerrero, F. J. Domínguez-Mota, and J. G. Tinoco-Ruiz<br>
+      Mathematics and Computers in Simulation. Vol 176, 2020, 301-311.<br>
+      https://doi.org/10.1016/j.matcom.2020.01.020
+
+  - Aproximación de la ecuación de advección en regiones irregulares utilizando un Método de Líneas y Diferencias Finitas Generalizadas<br>
+      G. Tinoco-Guerrero, F. J Domínguez-Mota, J. G. Tinoco-Ruiz, and J. S. Lucas-Martínez<br>
+      Revista Mexicana de Métodos Numéricos. Vol. 2 (3). 2018.<br>
+      https://www.scipedia.com/public/Tinoco_Guerrero_et_al_2018b
+
+  - A stability analysis for a generalized finite-difference scheme applied to the pure advection equation<br>
+      G. Tinoco-Guerrero, F. J. Domínguez-Mota, A. Gaona-Arias, M. L. Ruiz-Zavala, and J. G. Tinoco-Ruiz<br>
+      Mathematics and Computers in Simulation. Vol. 147, 2018, 293-300.<br>
+      https://doi.org/10.1016/j.matcom.2017.06.001
+  
+  - Modelado de Problemas de Aguas Someras en Regiones Irregulares Utilizando un Esquema de Diferencias Finitas Generalizadas (thesis)<br>
+      G. Tinoco-Guerrero<br>
+      Universidad Michoacana de San Nicolás de Hidalgo<br>
+      http://dx.doi.org/10.13140/RG.2.2.22676.30082
+  
   - An application of generalized differences to unsteady heat problems subject to mixed boundary conditions<br>
       F. J. Domínguez-Mota, J. G. Tinoco-Ruiz, F. O. Guillén-Reyes, G. Tinoco-Guerrero, and A. Valencia-Ramírez<br>
       Pan-American Congress on Computational Mechanics At Barcelona, Spain. Vol 1. 2015.<br>
