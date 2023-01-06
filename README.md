@@ -6,16 +6,22 @@ All the codes presented were developed by:
     
   - Dr. Gerardo Tinoco Guerrero<br>
     Universidad Michoacana de San Nicolás de Hidalgo<br>
-    Aula CIMNE<br>
+    Aula CIMNE-Morelia<br>
     gerardo.tinoco@umich.mx
 
   - Dr. Francisco Javier Domínguez Mota<br>
     Universidad Michoacana de San Nicolás de Hidalgo<br>
-    Aula CIMNE
+    Aula CIMNE-Morelia<br>
+    francisco.mota@umich.mx
+  
+  - Dr. José Gerardo Tinoco Ruiz<br>
+    Universidad Michoacana de San Nicolás de Hidalgo<br>
+    jose.gerardo.tinoco@umich.mx
 
   - Dr. José Alberto Guzmán Torres<br>
     Universidad Michoacana de San Nicolás de Hidalgo<br>
-    Aula CIMNE
+    Aula CIMNE-Morelia<br>
+    jose.alberto.guzman@umich.mx
 
 ## References
 More details on the Methods presented in these codes can be found in the following publications:
@@ -111,4 +117,4 @@ With the financing of:
   
   - Coordination of Scientific Research, CIC-UMSNH (Coordinación de la Investigación Científica de la Universidad Michoacana de San Nicolás de Hidalgo, CIC-UMSNH), México.
   
-  - Aula CIMNE Morelia, México.
+  - Aula CIMNE-Morelia, México.
