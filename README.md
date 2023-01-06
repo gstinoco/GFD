@@ -1,7 +1,7 @@
 # GFD Code pack
 Generalized Finite Differences Methods for numerically solve different Partial Differential Equations.<br>
 
-All the codes are distributed with an MIT License on [GitHub](https://github.com/gstinoco/GFD) and are free to use, modify, and distribute giving the proper copyright notice.
+All the codes are distributed under MIT License on [GitHub](https://github.com/gstinoco/GFD) and are free to use, modify, and distribute giving the proper copyright notice.
 
 ## Researchers
 All the codes presented were developed by:
