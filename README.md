@@ -113,7 +113,7 @@ More details on the Methods presented in these codes can be found in the followi
       International Journal of Modeling, Simulation, and Scientific Computing, Vol. 4 (2), 2013.<br>
       http://dx.doi.org/10.1142/S1793962313500049
 
-## Funding
+## Funding :dollar:
 With the financing of:
 
   - National Council of Science and Technology, CONACyT (Consejo Nacional de Ciencia y Tecnología, CONACyT), México.
