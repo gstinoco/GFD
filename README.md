@@ -1,9 +1,10 @@
 # GFD Code pack
 Generalized Finite Differences Methods for numerically solve different Partial Differential Equations.<br>
 
+## Description 📝
 All the codes are distributed under MIT License on [GitHub](https://github.com/gstinoco/GFD) and are free to use, modify, and distribute giving the proper copyright notice.
 
-## Researchers
+## Researchers 🧑‍🔬
 All the codes presented were developed by:
     
   - Dr. Gerardo Tinoco Guerrero<br>
@@ -25,7 +26,7 @@ All the codes presented were developed by:
     Aula CIMNE-Morelia<br>
     jose.alberto.guzman@umich.mx
 
-## References
+## References 📚
 More details on the Methods presented in these codes can be found in the following publications:
   - Numerical solution of density-driven groundwater flows using a generalized finite difference method defined by an unweighted least-squares problem<br>
       R. Román-Gutiérrez, C. Chávez-Negrete, F. J. Domínguez-Mota, J. A. Guzmán-Torres, and G. Tinoco-Guerrero<br>
