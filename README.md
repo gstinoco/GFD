@@ -12,21 +12,25 @@ All the codes presented were developed by:
   - Dr. Gerardo Tinoco Guerrero<br>
     Universidad Michoacana de San Nicolás de Hidalgo<br>
     Aula CIMNE-Morelia<br>
-    gerardo.tinoco@umich.mx
+    gerardo.tinoco@umich.mx<br>
+    https://orcid.org/0000-0003-3119-770X
 
   - Dr. Francisco Javier Domínguez Mota<br>
     Universidad Michoacana de San Nicolás de Hidalgo<br>
     Aula CIMNE-Morelia<br>
-    francisco.mota@umich.mx
+    francisco.mota@umich.mx<br>
+    https://orcid.org/0000-0001-6837-172X
   
   - Dr. José Gerardo Tinoco Ruiz<br>
     Universidad Michoacana de San Nicolás de Hidalgo<br>
-    jose.gerardo.tinoco@umich.mx
+    jose.gerardo.tinoco@umich.mx<br>
+    https://orcid.org/0000-0002-0866-4798
 
   - Dr. José Alberto Guzmán Torres<br>
     Universidad Michoacana de San Nicolás de Hidalgo<br>
     Aula CIMNE-Morelia<br>
-    jose.alberto.guzman@umich.mx
+    jose.alberto.guzman@umich.mx<br>
+    https://orcid.org/0000-0002-9309-9390
 
 ## References :books:
 More details on the Methods presented in these codes can be found in the following publications:
