@@ -20,10 +20,7 @@
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-from matplotlib.ticker import LinearLocator
-import matplotlib.tri as mtri
 import cv2
-from mpl_toolkits import mplot3d
 from matplotlib import cm
 
 def Mesh_Static(x, y, u_ap, u_ex):
@@ -147,7 +144,7 @@ def Cloud_Transient_Vid(p, tt, u_ap, u_ex, nam):
     if tt.min() == 1:
         tt -= 1
     t    = len(u_ex[0,:])
-    step = math.ceil(t/1000)
+    step = math.ceil(t/50)
     min  = u_ex.min()
     max  = u_ex.max()
     T    = np.linspace(0,1,t)
