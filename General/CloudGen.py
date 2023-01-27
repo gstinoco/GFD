@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 def CreateCloud(xb,yb):
     dist = 0
     # For holes, the coordinates and the radium
-    xc = 0.5
-    yc = 0.5
-    ra = 0.05
+    #xc = 0.5
+    #yc = 0.5
+    #ra = 0.05
 
     # Find the maximum distance between the boundary nodes.
     m = len(xb)
@@ -21,12 +21,12 @@ def CreateCloud(xb,yb):
 
     # Create the Triangulation
     pb = np.hstack([xb,yb])
-    geo = dmsh.Polygon(pb) - dmsh.Circle([xc,yc],ra)
+    geo = dmsh.Polygon(pb)# - dmsh.Circle([xc,yc],ra)
     X, cells = dmsh.generate(geo, dist)
 
     # Create a polygon
-    poly = Polygon(pb).buffer(-0.005)
-    circ = Point(xc,yc).buffer(ra).buffer(0.005)
+    poly = Polygon(pb).buffer(-dist/4)
+    #circ = Point(xc,yc).buffer(ra).buffer(dist/4)
 
     points = []
     for point in X:
@@ -39,9 +39,9 @@ def CreateCloud(xb,yb):
         if i.within(poly) == False:
             pbx.append([i.x])
             pby.append([i.y])
-        elif i.within(circ):
-            pbx.append([i.x])
-            pby.append([i.y])
+        #elif i.within(circ):
+        #    pbx.append([i.x])
+        #    pby.append([i.y])
 
     bond = np.hstack([np.array(pbx),np.array(pby)])
 
@@ -53,9 +53,6 @@ def CreateCloud(xb,yb):
         for j in range(n):
             if X[i,0] == bond[j,0] and X[i,1] == bond[j,1]:
                 X[i,2] = 1
-
-    color = ['blue' if x == 0 else 'red' for x in X[:,2]]
-    plt.scatter(X[:,0], X[:,1], c=color)
 
     return X, cells
 
@@ -79,3 +76,11 @@ def GridToCloud(x,y):
     X, cells = CreateCloud(xb,yb)
 
     return X, cells
+
+def GraphCloud(X, cells, nom):
+    nomm = 'Regions/Clouds/New/' + nom + '.png'
+    color = ['blue' if x == 0 else 'red' for x in X[:,2]]
+    plt.scatter(X[:,0], X[:,1], c=color)
+    plt.title(nom + 'Cloud')
+    plt.savefig(nomm)
+    plt.close()
