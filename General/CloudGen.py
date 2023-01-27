@@ -80,7 +80,9 @@ def GridToCloud(x,y):
 def GraphCloud(X, cells, nom):
     nomm = 'Regions/Clouds/New/' + nom + '.png'
     color = ['blue' if x == 0 else 'red' for x in X[:,2]]
+    plt.rcParams["figure.figsize"] = (12,12)
     plt.scatter(X[:,0], X[:,1], c=color)
     plt.title(nom + 'Cloud')
+    #plt.show()
     plt.savefig(nomm)
     plt.close()
