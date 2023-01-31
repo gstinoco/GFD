@@ -1,6 +1,5 @@
 import dmsh
 import numpy as np
-from scipy.io import loadmat
 from shapely.geometry import Point, Polygon
 import matplotlib.pyplot as plt
 
