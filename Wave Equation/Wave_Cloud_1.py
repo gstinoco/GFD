@@ -128,7 +128,8 @@ def Cloud(p, f, g, t, c):
     for k in np.arange(t):
         for i in np.arange(m):                                                      # For each of the boundary nodes.
             if p[i,2] == 1:                                                         # If the node is in the boundary.
-                u_ap[i, k] = f(p[i, 0], p[i, 1], T[k], c)                           # The boundary condition is assigned.
+                #u_ap[i, k] = f(p[i, 0], p[i, 1], T[k], c)                           # The boundary condition is assigned.
+                u_ap[i,k] = 0
   
     # Initial condition
     for i in np.arange(m):                                                          # For each of the nodes.

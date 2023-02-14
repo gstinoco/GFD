@@ -14,13 +14,11 @@
 # Last Modification:
 #   December, 2022.
 
-import math
+import numpy as np
 from scipy.io import loadmat
-from sys import path
-path.insert(0, 'General/')
-import Errors
-import Graph
-import CloudGen
+import General.Errors as Errors
+import General.Graph as Graph
+import General.CloudGen as CloudGen
 import Wave_Cloud_1
 
 # Region data is loaded.
@@ -52,11 +50,11 @@ lam = 0.5
 #     g = -(\pi c\sqrt{2})\sin(\pi x)\sin(\pi y)\sin(\pi ct\sqrt{2})
 
 def fWAV(x, y, t, c):
-    fun = math.cos(math.sqrt(2)*math.pi*c*t)*math.sin(math.pi*x)*math.sin(math.pi*y);
+    fun = np.cos(np.sqrt(2)*np.pi*c*t)*np.sin(np.pi*x)*np.sin(np.pi*y);
     return fun
 
 def gWAV(x, y, t, c):
-    fun = -math.sqrt(2)*math.pi*c*math.sin(math.pi*x)*math.sin(math.pi*y)*math.sin(math.sqrt(2)*math.pi*c*t)
+    fun = -np.sqrt(2)*np.pi*c*np.sin(np.pi*x)*np.sin(np.pi*y)*np.sin(np.sqrt(2)*np.pi*c*t)
     return fun
 
 # Wave Equation in 2D computed on a unstructured cloud of points.
