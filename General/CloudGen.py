@@ -6,9 +6,13 @@ import matplotlib.pyplot as plt
 def CreateCloud(xb,yb):
     dist = 0
     # For holes, the coordinates and the radium
-    #xc = 0.5
-    #yc = 0.5
-    #ra = 0.05
+    x1 = 0.6
+    y1 = 0.4
+    x2 = 1
+    y2 = 0.8
+    x3 = 1.5
+    y3 = 0.5
+    ra = 0.05
 
     # Find the maximum distance between the boundary nodes.
     m = len(xb)
@@ -20,12 +24,14 @@ def CreateCloud(xb,yb):
 
     # Create the Triangulation
     pb = np.hstack([xb,yb])
-    geo = dmsh.Polygon(pb)# - dmsh.Circle([xc,yc],ra)
+    geo = dmsh.Polygon(pb) - dmsh.Circle([x1,y1],ra) - dmsh.Circle([x2,y2],ra) - dmsh.Circle([x3,y3],ra)
     X, cells = dmsh.generate(geo, dist)
 
     # Create a polygon
     poly = Polygon(pb).buffer(-dist/4)
-    #circ = Point(xc,yc).buffer(ra).buffer(dist/4)
+    circ1 = Point(x1,y1).buffer(ra).buffer(dist/4)
+    circ2 = Point(x2,y2).buffer(ra).buffer(dist/4)
+    circ3 = Point(x3,y3).buffer(ra).buffer(dist/4)
 
     points = []
     for point in X:
@@ -38,9 +44,15 @@ def CreateCloud(xb,yb):
         if i.within(poly) == False:
             pbx.append([i.x])
             pby.append([i.y])
-        #elif i.within(circ):
-        #    pbx.append([i.x])
-        #    pby.append([i.y])
+        elif i.within(circ1):
+            pbx.append([i.x])
+            pby.append([i.y])
+        elif i.within(circ2):
+            pbx.append([i.x])
+            pby.append([i.y])
+        elif i.within(circ3):
+            pbx.append([i.x])
+            pby.append([i.y])
 
     bond = np.hstack([np.array(pbx),np.array(pby)])
 
@@ -57,11 +69,11 @@ def CreateCloud(xb,yb):
 
 def GridToCloud(x,y):
     # First, the region is scaled to fit in [0,1]X[0,1].
-    mm = max(x.max(), y.max())
+    #mm = max(x.max(), y.max())
     x  = x-x.min()
     y  = y-y.min()
-    x  = x/mm
-    y  = y/mm
+    #x  = x/mm
+    #y  = y/mm
 
     # The dimensions of the Mesh.
     m    = len(x[:,0])
@@ -77,7 +89,7 @@ def GridToCloud(x,y):
     return X, cells
 
 def GraphCloud(X, cells, nom):
-    nomm = 'Regions/Clouds/New/Holes/' + nom + '.png'
+    nomm = 'Regions/Clouds/New/' + nom + '.png'
     color = ['blue' if x == 0 else 'red' for x in X[:,2]]
     plt.rcParams["figure.figsize"] = (12,12)
     plt.scatter(X[:,0], X[:,1], c=color)
