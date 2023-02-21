@@ -6,9 +6,13 @@ import matplotlib.pyplot as plt
 def CreateCloud(xb,yb):
     dist = 0
     # For holes, the coordinates and the radium
-    #xc = 0.5
-    #yc = 0.5
-    #ra = 0.05
+    x1 = 0.6
+    y1 = 0.4
+    x2 = 1
+    y2 = 0.8
+    x3 = 1.5
+    y3 = 0.5
+    ra = 0.05
 
     # Find the maximum distance between the boundary nodes.
     m = len(xb)
@@ -20,12 +24,14 @@ def CreateCloud(xb,yb):
 
     # Create the Triangulation
     pb = np.hstack([xb,yb])
-    geo = dmsh.Polygon(pb)# - dmsh.Circle([xc,yc],ra)
+    geo = dmsh.Polygon(pb) - dmsh.Circle([x1,y1],ra) - dmsh.Circle([x2,y2],ra) - dmsh.Circle([x3,y3],ra)
     X, cells = dmsh.generate(geo, dist)
 
     # Create a polygon
     poly = Polygon(pb).buffer(-dist/4)
-    #circ = Point(xc,yc).buffer(ra).buffer(dist/4)
+    circ1 = Point(x1,y1).buffer(ra).buffer(dist/4)
+    circ2 = Point(x2,y2).buffer(ra).buffer(dist/4)
+    circ3 = Point(x3,y3).buffer(ra).buffer(dist/4)
 
     points = []
     for point in X:
@@ -38,9 +44,15 @@ def CreateCloud(xb,yb):
         if i.within(poly) == False:
             pbx.append([i.x])
             pby.append([i.y])
-        #elif i.within(circ):
-        #    pbx.append([i.x])
-        #    pby.append([i.y])
+        elif i.within(circ1):
+            pbx.append([i.x])
+            pby.append([i.y])
+        elif i.within(circ2):
+            pbx.append([i.x])
+            pby.append([i.y])
+        elif i.within(circ3):
+            pbx.append([i.x])
+            pby.append([i.y])
 
     bond = np.hstack([np.array(pbx),np.array(pby)])
 

@@ -3,9 +3,11 @@ from scipy.io import savemat
 import CloudGen
 
 # Region data is loaded.
-regions = ['CAB','CUA','CUI','DOW','ENG','GIB','HAB','MIC','PAT','ZIR']
-sizes = ['21', '41','81']
+#regions = ['CAB','CUA','CUI','DOW','ENG','GIB','HAB','MIC','PAT','ZIR']
+#sizes = ['21', '41','81']
 
+regions =['canal']
+sizes = ['161']
 
 ## To generate the clouds
 
