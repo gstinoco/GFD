@@ -14,34 +14,30 @@
 # Last Modification:
 #   December, 2022.
 
-import math
+import numpy as np
 from scipy.io import loadmat
 from sys import path
 path.insert(0, 'General/')
-import Errors
 import Graph
-import Wave_2D
-import Wave_2D_Implicit
+import Wave_Cloud_1
 
 # Region data is loaded.
 # Triangulation or unstructured cloud of points to work in.
-region = 'CAB'
-cloud = '1'
+region = 'CUA'
+cloud = '41'
 # This region can be changed for any other triangulation or unstructured cloud of points on Regions/ or with any other region with the same file data structure.
 
 # All data is loaded from the file
-mat = loadmat('Regions/Clouds/' + region + '_' + cloud + '.mat')
+mat = loadmat('Regions/Clouds/New/Holes/' + region + cloud + '.mat')
 
 # Node data is saved
 p   = mat['p']
-pb  = mat['pb']
-vec = mat['vec']
-tt  = mat['t']
+tt  = mat['tt']
 if tt.min() == 1:
     tt -= 1
 
 # Number of Time Steps
-t = 500
+t = 2000
 
 # Wave coefficient
 c = 1
@@ -57,37 +53,19 @@ lam = 0.5
 #     g = -(\pi c\sqrt{2})\sin(\pi x)\sin(\pi y)\sin(\pi ct\sqrt{2})
 
 def fWAV(x, y, t, c):
-    fun = math.cos(math.sqrt(2)*math.pi*c*t)*math.sin(math.pi*x)*math.sin(math.pi*y);
+    #fun = np.cos(np.sqrt(2)*np.pi*c*t)*np.sin(np.pi*x)*np.sin(np.pi*y);
+    fun = (1/2)*np.exp(-400*((x - c*t - 0.5)**2 + (y - c*t - 0.5)**2))
     return fun
 
 def gWAV(x, y, t, c):
-    fun = -math.sqrt(2)*math.pi*c*math.sin(math.pi*x)*math.sin(math.pi*y)*math.sin(math.sqrt(2)*math.pi*c*t)
+    #fun = -np.sqrt(2)*np.pi*c*np.sin(np.pi*x)*np.sin(np.pi*y)*np.sin(np.sqrt(2)*np.pi*c*t)
+    fun = c*(400*x + 400*y - 800*c*t - 240)*np.exp(-400*((x - c*t - 0.5)**2 + (y - c*t - 0.5)**2))
     return fun
 
-# Wave Equation in 2D computed on triangulations.
-u_ap, u_ex, vec = Wave_2D.Triangulation(p, pb, tt, fWAV, gWAV, t, c)
-er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the triangulation with the explicit scheme is: ', er.max())
-Graph.Error(er)
-Graph.Cloud_Transient(p, tt, u_ap, u_ex)
-
 # Wave Equation in 2D computed on a unstructured cloud of points.
-u_ap, u_ex, vec = Wave_2D.Cloud(p, pb, fWAV, gWAV, t, c)
-er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the unstructured cloud of points with the explicit scheme is: ', er.max())
-Graph.Error(er)
+u_ap, u_ex, vec = Wave_Cloud_1.Cloud(p, fWAV, gWAV, t, c)
+#er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
+#print('The maximum mean square error in the unstructured cloud of points with the explicit scheme is: ', er.max())
+#Graph.Error(er)
 Graph.Cloud_Transient(p, tt, u_ap, u_ex)
-
-# Wave Equation in 2D computed with an implicit algorithm on triangulations.
-u_ap, u_ex, vec = Wave_2D_Implicit.Triangulation(p, pb, tt, fWAV, gWAV, t, c, lam)
-er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the triangulation with the implicit scheme is: ', er.max())
-Graph.Error(er)
-Graph.Cloud_Transient(p, tt, u_ap, u_ex)
-
-# Wave Equation in 2D computed with an implicit algorithm on a unstructured cloud of points.
-u_ap, u_ex, vec = Wave_2D_Implicit.Cloud(p, pb, fWAV, gWAV, t, c, lam)
-er = Errors.Cloud_Transient(p, vec, u_ap, u_ex)
-print('The maximum mean square error in the unstructured cloud of points with the implicit scheme is: ', er.max())
-Graph.Error(er)
-Graph.Cloud_Transient(p, tt, u_ap, u_ex)
+#Graph.Cloud_Transient_Vid(p, tt, u_ap, u_ex, 'CAB1')

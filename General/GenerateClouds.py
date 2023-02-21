@@ -42,21 +42,18 @@ for reg in regions:
         mesh = me
 
         # All data is loaded from the file
-        nom  = 'Regions/Clouds/New/' + regi + mesh + '.mat'
-        mat  = loadmat(nom)
+        mat  = loadmat('Regions/Meshes/' + regi + mesh + '.mat')
+        nom = 'Regions/Clouds/New/Holes/' + regi + mesh + '.mat'
+        print('Trabajando en la malla ' + regi + mesh + '.')
 
-        p   = mat['p']
-        tt  = mat['tt']
-        
-#
-#        # The cloud is generated
-#        x  = mat['x']
-#        y  = mat['y']
-#        p, tt = CloudGen.GridToCloud(x,y)
-#
-#        # The cloud is saved
-#        mdic = {"p": p, "tt": tt}
-#        savemat(nom, mdic)
-#
+        # The cloud is generated
+        x  = mat['x']
+        y  = mat['y']
+        p, tt = CloudGen.GridToCloud(x,y)
+
+        # The cloud is saved
+        mdic = {"p": p, "tt": tt}
+        savemat(nom, mdic)
+
         nom = regi + mesh
         CloudGen.GraphCloud(p, tt, nom)
