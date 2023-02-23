@@ -7,7 +7,7 @@ import CloudGen
 #sizes = ['21', '41','81']
 
 regions =['canal']
-sizes = ['161']
+sizes = ['21','41','81','161']
 
 ## To generate the clouds
 
