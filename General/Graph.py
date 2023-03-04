@@ -207,3 +207,44 @@ def Error(er):
 
     plt.suptitle('Quadratic Mean Error')
     plt.show()
+
+def GraphCloud(X, cells, nom):
+    nomm = 'Regions/Clouds/' + nom + '.png'
+    #color = ['blue' if x == 0 else 'red' for x in X[:,2]]
+    color = 'black'
+    plt.rcParams["figure.figsize"] = (12,12)
+    plt.scatter(X[:,0], X[:,1], c=color)
+    plt.title(nom + ' Cloud')
+    #plt.show()
+    plt.savefig(nomm)
+    plt.close()
+
+def GraphHoles(X, cells, nom):
+    nomm = 'Regions/Holes/' + nom + '.png'
+    #color = ['blue' if x == 0 else 'red' for x in X[:,2]]
+    color = 'black'
+    plt.rcParams["figure.figsize"] = (12,12)
+    plt.scatter(X[:,0], X[:,1], c=color)
+    plt.title(nom + ' Cloud')
+    #plt.show()
+    plt.savefig(nomm)
+    plt.close()
+
+def GraphTriangles(X, cells, nom):
+    nomm = 'Regions/Clouds/' + nom + '_Tri.png'
+    plt.rcParams["figure.figsize"] = (12,12)
+    plt.triplot(X[:,0], X[:,1], cells, 'ko-')
+    plt.title(nom + ' Triangulation')
+    #plt.show()
+    plt.savefig(nomm)
+    plt.close()
+
+def GraphMesh(x, y, nom):
+    nomm = 'Regions/Meshes/' + nom + '.png'
+    plt.rcParams["figure.figsize"] = (12,12)
+    plt.plot(x, y, c='black')
+    plt.plot(x.T, y.T, c='black')
+    plt.title(nom + ' Mesh')
+    #plt.show()
+    plt.savefig(nomm)
+    plt.close()

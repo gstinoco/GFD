@@ -6,12 +6,12 @@ import matplotlib.pyplot as plt
 def CreateCloud(xb,yb):
     dist = 0
     # For holes, the coordinates and the radium
-    x1 = 0.6
-    y1 = 0.4
-    x2 = 1
-    y2 = 0.8
-    x3 = 1.5
-    y3 = 0.5
+    x1 = 0.45#0.6
+    y1 = 0.6#0.4
+    x2 = 3#1
+    y2 = 3#0.8
+    x3 = 3#1.5
+    y3 = 3#0.5
     ra = 0.05
 
     # Find the maximum distance between the boundary nodes.

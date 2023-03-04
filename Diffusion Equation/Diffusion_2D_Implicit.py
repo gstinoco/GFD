@@ -15,8 +15,8 @@
 #   January, 2023.
 
 import numpy as np
-import Scripts.Gammas as Gammas
-import Scripts.Neighbors as Neighbors
+import General.Gammas as Gammas
+import General.Neighbors as Neighbors
 
 def Mesh_K(x, y, f, nu, t, lam):
     # 2D Diffusion implemented in Logically Rectangular Meshes.
