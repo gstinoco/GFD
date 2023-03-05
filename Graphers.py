@@ -13,20 +13,28 @@ for reg in regions:
     for me in sizes:
         size = me
 
+        nom = regi + '_' + str(ss)
+        
         mat = loadmat('Regions/Meshes/' + regi + '_' + size + '.mat')
         x  = mat['x']
         y  = mat['y']
+
+        mat = loadmat('Regions/Clouds/' + regi + '_' + size + '.mat')
+        p   = mat['p']
+        tt  = mat['tt']
+        if tt.min() == 1:
+            tt -= 1
+        
+        Graph.GraphMesh(x, y, nom)
+        Graph.GraphCloud(p, tt, nom)
+        Graph.GraphTriangles(p, tt, nom)
 
         mat = loadmat('Regions/Holes/' + regi + '_' + size + '.mat')
         p   = mat['p']
         tt  = mat['tt']
         if tt.min() == 1:
             tt -= 1
-        nom = regi + '_' + str(ss)
-        
-        Graph.GraphMesh(x, y, nom)
-        Graph.GraphCloud(p, tt, nom)
-        Graph.GraphTriangles(p, tt, nom)
+
         Graph.GraphHoles(p, tt, nom)
 
         ss += 1
