@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from shapely.geometry import Point, Polygon
 from scipy.spatial import Delaunay
 
-def CreateCloud(xb, yb):
+def CreateCloud(xb, yb, num):
     dist = 0
 
     # Find the maximum distance between the boundary nodes.
@@ -12,7 +12,9 @@ def CreateCloud(xb, yb):
     for i in range(m):
         d = np.sqrt((xb[i] - xb[i-1])**2 + (yb[i] - yb[i-1])**2)
         dist = max(dist,d)
-        
+    
+    dist = dist/num
+
     # Create the Triangulation
     pb = np.hstack([xb,yb])
     geo = dmsh.Polygon(pb)
@@ -115,7 +117,7 @@ def CreateCloud_Holes(xb, yb):
 
     return X, cells
 
-def GridToCloud(x, y, holes = False):
+def GridToCloud(x, y, holes = False, num = 1):
     # First, the region is scaled to fit in [0,1]X[0,1].
     mm = max(x.max(), y.max())
     x  = x-x.min()
@@ -133,18 +135,18 @@ def GridToCloud(x, y, holes = False):
 
     # The cloud is created with the boundary.
     if holes == False:
-        X, cells = CreateCloud(xb, yb)
+        X, cells = CreateCloud(xb, yb, num)
     else:
         X, cells = CreateCloud_Holes(xb, yb)
 
     return X, cells
 
 def GraphCloud(X, nom):
-    nomm  = nom + '.png'
+    nomm  = 'Regions/Clouds/' + nom + '_n.png' 
     color = ['blue' if x == 0 else 'red' for x in X[:,2]]
     plt.rcParams["figure.figsize"] = (12,12)
     plt.scatter(X[:,0], X[:,1], c=color)
-    plt.title(nom + 'Cloud')
+    plt.title(nom + ' Cloud')
     #plt.show()
     plt.savefig(nomm)
     plt.close()
