@@ -27,12 +27,13 @@ class GFD_Transient:
         self.tt   = triangulation
         self.t    = time_steps
         self.m    = len(points[:,0])
+        self.L    = np.vstack([[0], [0], [0], [0], [0]])
+        self.K    = np.zeros([self.m,self.m])
         self.T    = np.linspace(time_interval[0],time_interval[1],time_steps)
         self.dt   = self.T[1] - self.T[0]
-        self.L    = np.vstack([[0], [0], [0], [0], [0]])
         self.u_ap = np.zeros([self.m,time_steps])
         self.u_ex = np.zeros([self.m,time_steps])
-        self.K    = np.zeros([self.m,self.m])
+        
     
     def Boundary(self, f, coefficient):
         for k in np.arange(self.t):

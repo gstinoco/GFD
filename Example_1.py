@@ -15,7 +15,7 @@ def fADV(x, y, t, c):
     fun = 0.2*np.exp((-(x-.5-c[0]*t)**2-(y-.5-c[1]*t)**2)/.001)
     return fun
 
-mat = loadmat('Regions/Clouds/CAB_2.mat')
+mat = loadmat('Regions/Clouds/CAB_3.mat')
 p   = mat['p']
 tt  = mat['tt']
 if tt.min() == 1:
